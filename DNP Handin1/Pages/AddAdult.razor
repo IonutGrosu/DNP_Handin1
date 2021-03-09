@@ -1,0 +1,117 @@
+﻿@page "/addadult"
+@using Models
+@using DNP_Handin1.Data
+@inject NavigationManager NavigationManager
+@inject IFileAdapter FileAdapter
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-10">
+            <h1>Add Adult</h1>
+        </div>
+        <div class="col-md-2">
+            <button class="btn btn-outline-dark" @onclick="@GoBackToAdultsList">
+                <span class="oi oi-arrow-thick-left" aria-hidden="true"></span>
+                 Back
+            </button>
+        </div>
+    </div>
+</div>
+
+
+
+<EditForm Model="@newAdult" OnValidSubmit="@SaveCreatedAdult">
+    <DataAnnotationsValidator/>
+    <ValidationSummary/>
+    <div class="form-group">
+        First name:<br/>
+        <InputText @bind-Value="newAdult.FirstName"/>
+    </div>
+    <div class="form-group">
+        Last name:<br/>
+        <InputText @bind-Value="newAdult.LastName"/>
+    </div>
+    <div class="form-group">
+        Hair color:<br/>
+        <InputText @bind-Value="newAdult.HairColor"/>
+    </div>
+    <div class="form-group">
+        Eye color:<br/>
+        <InputText @bind-Value="newAdult.EyeColor"/>
+    </div>
+    <div class="form-group">
+        Age:<br/>
+        <InputNumber @bind-Value="newAdult.Age"/>
+    </div>
+    <div class="form-group">
+        Weight:<br/>
+        <InputNumber @bind-Value="newAdult.Weight"/>
+    </div>
+    <div class="form-group">
+        Height:<br/>
+        <InputNumber @bind-Value="newAdult.Height"/>
+    </div>
+    <div class="form-group">
+        Sex:<br/>
+        <InputSelect @bind-Value="newAdult.Sex">
+            <option value="">Select sex</option>
+            <option value="F">Female</option>
+            <option value="M">Male</option>
+        </InputSelect>
+    </div>
+    <div class="form-group">
+        Job:<br/>
+        <InputSelect @bind-Value="selectedJob" >
+            <option value="">Select job</option>
+            @foreach (var job in allJobs)
+            {
+                string jobValue = job.JobTitle;
+                <option value="@jobValue">@job.JobTitle</option>
+            }
+        </InputSelect>
+    </div>
+    <p class="actions">
+        <button class="btn btn-outline-dark" type="submit">Save adult</button>
+    </p>
+</EditForm>
+
+@code {
+    private Adult newAdult = new Adult();
+    private List<Job> allJobs;
+
+    private string selectedJob;
+
+    protected override async Task OnInitializedAsync()
+    {
+        allJobs = FileAdapter.GetAllJobs();
+    }
+
+    private void SaveCreatedAdult()
+    {
+        //assign selectedJob into newAdult
+        AssignSelectedJob();
+
+        FileAdapter.AddAdult(newAdult);
+        GoBackToAdultsList();
+    }
+
+    private void AssignSelectedJob()
+    {
+        Job temp = new Job();
+        foreach (Job job in allJobs)
+        {
+            if (job.JobTitle.Equals(selectedJob))
+            {
+                temp = job;
+            }
+        }
+
+        newAdult.JobTitle = temp;
+    }
+
+    private void GoBackToAdultsList()
+    {
+        NavigationManager.NavigateTo("/adults");
+    }
+
+}

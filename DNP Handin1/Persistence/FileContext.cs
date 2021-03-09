@@ -20,9 +20,9 @@ namespace FileData
             Adults = File.Exists(adultsFile) ? ReadData<Adult>(adultsFile) : new List<Adult>();
         }
 
-        private IList<T> ReadData<T>(string s)
+        private IList<T> ReadData<T>(string fileName)
         {
-            using (var jsonReader = File.OpenText(familiesFile))
+            using (var jsonReader = File.OpenText(fileName))
             {
                 return JsonSerializer.Deserialize<List<T>>(jsonReader.ReadToEnd());
             }

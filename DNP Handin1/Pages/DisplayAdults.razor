@@ -1,0 +1,74 @@
+﻿@page "/adults"
+@using Models
+@using DNP_Handin1.Data
+@inject IFileAdapter FileAdapter
+@inject NavigationManager NavigationManager
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-10">
+            <h1>All Adults</h1>
+        </div>
+        <div class="col-md-2">
+            <button class="btn btn-outline-dark" @onclick="@GoToAddAdultPage">
+                Add adult 
+                <span class="oi oi-arrow-thick-right" aria-hidden="true"></span>
+            </button>
+        </div>
+    </div>
+</div>
+
+
+@if (Adults == null)
+{
+    <p>
+        <em>Loading..</em>
+    </p>
+}
+else if (!Adults.Any())
+{
+    <p>
+        <em>No families stored. Please add some</em>
+    </p>
+}
+else
+{
+    <table class="table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>First name</th>
+            <th>Last name</th>
+            <th>Age</th>
+            <th>Job title</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (Adult adult in Adults)
+        {
+            <tr>
+                <td>@adult.Id</td>
+                <td>@adult.FirstName</td>
+                <td>@adult.LastName</td>
+                <td>@adult.Age</td>
+                <td>@adult.JobTitle.JobTitle</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<Adult> Adults;
+
+    protected override async Task OnInitializedAsync()
+    {
+        Adults = FileAdapter.GetAllAdults();
+    }
+
+    private void GoToAddAdultPage()
+    {
+        NavigationManager.NavigateTo("/addadult");
+    }
+
+}

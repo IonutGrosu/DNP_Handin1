@@ -1,0 +1,34 @@
+﻿@page "/jobs"
+@using Models
+@using DNP_Handin1.Data
+@inject IFileAdapter FileAdapter
+
+<h1>All jobs</h1>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>Title</th>
+        <th>Salary</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (Job job in allJobs)
+    {
+        <tr>
+            <td>@job.JobTitle</td>
+            <td>@job.Salary</td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+@code {
+    private List<Job> allJobs;
+
+    protected override async Task OnInitializedAsync()
+    {
+        allJobs = FileAdapter.GetAllJobs();
+    }
+
+}

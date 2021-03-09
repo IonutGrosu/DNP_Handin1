@@ -1,0 +1,57 @@
+﻿@page "/families"
+@using Models
+@using Data
+@inject IFileAdapter FileAdapter
+
+<h1>All Families</h1>
+
+@if (Families == null)
+{
+    <p>
+        <em>Loading..</em>
+    </p>
+}
+else if (!Families.Any())
+{
+    <p>
+        <em>No families stored. Please add some</em>
+    </p>
+}
+else
+{
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Family ID</th>
+            <th>Street name</th>
+            <th>House number</th>
+            <th>No of adults</th>
+            <th>No of children</th>
+            <th>No of pets</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var family in Families)
+        {
+            <tr>
+                <td>-</td>
+                <td>@family.StreetName</td>
+                <td>@family.HouseNumber</td>
+                <td>@family.Adults.Count</td>
+                <td>@family.Children.Count</td>
+                <td>@family.Pets.Count</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<Family> Families;
+
+    protected override async Task OnInitializedAsync()
+    {
+        Families = FileAdapter.GetAllFamilies();
+    }
+
+}
