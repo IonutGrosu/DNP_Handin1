@@ -25,12 +25,12 @@ namespace DNP_Handin1.Data
         public void AddAdult(Adult adult)
         {
             adult.Id = AdultID++;
-            FileContext.Adults.Add(adult);
-            FileContext.SaveChanges();
-            // Console.WriteLine(JsonSerializer.Serialize(adult, new JsonSerializerOptions
-            // {
-            //     WriteIndented = true
-            // }));
+            // FileContext.Adults.Add(adult);
+            // FileContext.SaveChanges();
+            Console.WriteLine(JsonSerializer.Serialize(adult, new JsonSerializerOptions
+            {
+                WriteIndented = true
+            }));
         }
 
         public List<Job> GetAllJobs()

@@ -7,11 +7,11 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-10">
-            <h1>All Adults</h1>
+            <h1>Adults</h1>
         </div>
         <div class="col-md-2">
             <button class="btn btn-outline-dark" @onclick="@GoToAddAdultPage">
-                Add adult 
+                Add adult
                 <span class="oi oi-arrow-thick-right" aria-hidden="true"></span>
             </button>
         </div>
@@ -19,13 +19,13 @@
 </div>
 
 
-@if (Adults == null)
+@if (allAdults == null)
 {
     <p>
         <em>Loading..</em>
     </p>
 }
-else if (!Adults.Any())
+else if (!allAdults.Any())
 {
     <p>
         <em>No families stored. Please add some</em>
@@ -33,6 +33,27 @@ else if (!Adults.Any())
 }
 else
 {
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-1">
+                ID
+                <input type="number" @oninput="@((arg) => FilterById(arg))" style="width: 50px"/>
+            </div>
+            <div class="col-md-2">
+                First name
+                <input type="text" @oninput="@((arg) => FilterByFirstName(arg))" style="width: 125px"/>
+            </div>
+        </div>
+
+        <div class="row my-3">
+            <div class="col-md-1"></div>
+            <div class="col-md-2">
+                Last name
+                <input type="text" @oninput="@((arg) => FilterByLastName(arg))" style="width: 125px"/>
+            </div>
+        </div>
+    </div>
+
     <table class="table">
         <thead>
         <tr>
@@ -40,17 +61,19 @@ else
             <th>First name</th>
             <th>Last name</th>
             <th>Age</th>
+            <th>Sex</th>
             <th>Job title</th>
         </tr>
         </thead>
         <tbody>
-        @foreach (Adult adult in Adults)
+        @foreach (Adult adult in adultsToShow)
         {
             <tr>
                 <td>@adult.Id</td>
                 <td>@adult.FirstName</td>
                 <td>@adult.LastName</td>
                 <td>@adult.Age</td>
+                <td>@adult.Sex</td>
                 <td>@adult.JobTitle.JobTitle</td>
             </tr>
         }
@@ -58,17 +81,80 @@ else
     </table>
 }
 
-@code {
-    private List<Adult> Adults;
+@code
+{
+    private List<Adult> allAdults = new List<Adult>();
+    private List<Adult> adultsToShow = new List<Adult>();
+
+    private int? filterById = null;
+    private string filterByLastName = "";
+    private string filterByFirstName = "";
 
     protected override async Task OnInitializedAsync()
     {
-        Adults = FileAdapter.GetAllAdults();
+        allAdults = FileAdapter.GetAllAdults();
+        ExecuteFilter();
     }
 
     private void GoToAddAdultPage()
     {
         NavigationManager.NavigateTo("/addadult");
+    }
+
+    private void FilterById(ChangeEventArgs changeEventArgs)
+    {
+        filterById = null;
+        try
+        {
+            filterById = int.Parse(changeEventArgs.Value.ToString());
+            if (filterById < 0)
+            {
+                filterById = null;
+            }
+        }
+        catch (Exception e)
+        {
+        }
+        ExecuteFilter();
+    }
+
+    private void FilterByLastName(ChangeEventArgs changeEventArgs)
+    {
+        filterByLastName = "";
+        try
+        {
+            filterByLastName = changeEventArgs.Value.ToString();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+        ExecuteFilter();
+    }
+
+    private void FilterByFirstName(ChangeEventArgs changeEventArgs)
+    {
+        filterByFirstName = "";
+        try
+        {
+            filterByFirstName = changeEventArgs.Value.ToString();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+        ExecuteFilter();
+    }
+
+    private void ExecuteFilter()
+    {
+        adultsToShow = allAdults.Where(t => 
+            ((filterById != null && t.Id == filterById) || filterById == null) && 
+            ((!filterByLastName.Equals("") && t.LastName.Contains(filterByLastName)) || filterByLastName.Equals("")) &&
+            ((!filterByFirstName.Equals("") && t.FirstName.Contains(filterByFirstName)) || filterByFirstName.Equals(""))
+            ).ToList();
     }
 
 }
