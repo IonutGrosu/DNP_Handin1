@@ -8,8 +8,8 @@ namespace DNP_Handin1.Data
     {
         public List<Family> GetAllFamilies();
         public List<Adult> GetAllAdults();
+        public Adult GetAdultById(int id);
         public void AddAdult(Adult adult);
-
         public List<Job> GetAllJobs();
     }
 }

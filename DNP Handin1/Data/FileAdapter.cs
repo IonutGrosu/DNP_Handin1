@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using FileData;
 using Models;
@@ -18,8 +19,19 @@ namespace DNP_Handin1.Data
 
         public List<Adult> GetAllAdults()
         {
-            
+            foreach (Adult fileContextAdult in FileContext.Adults)
+            {
+                if (fileContextAdult.Id > AdultID)
+                {
+                    AdultID = fileContextAdult.Id;
+                }
+            }
             return (List<Adult>) FileContext.Adults;
+        }
+
+        public Adult GetAdultById(int id)
+        {
+            return FileContext.Adults.FirstOrDefault(adult => adult.Id == id);
         }
 
         public void AddAdult(Adult adult)

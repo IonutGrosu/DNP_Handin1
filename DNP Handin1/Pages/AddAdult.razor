@@ -10,7 +10,7 @@
             <h1>Add Adult</h1>
         </div>
         <div class="col-md-2">
-            <button class="btn btn-outline-dark" @onclick="@GoBackToAdultsList">
+            <button class="btn btn-outline-dark" @onclick="@GoBack">
                 <span class="oi oi-arrow-thick-left" aria-hidden="true"></span>
                  Back
             </button>
@@ -92,7 +92,7 @@
         AssignSelectedJob();
 
         FileAdapter.AddAdult(newAdult);
-        GoBackToAdultsList();
+        GoBack();
     }
 
     private void AssignSelectedJob()
@@ -109,7 +109,7 @@
         newAdult.JobTitle = temp;
     }
 
-    private void GoBackToAdultsList()
+    private void GoBack()
     {
         NavigationManager.NavigateTo("/adults");
     }

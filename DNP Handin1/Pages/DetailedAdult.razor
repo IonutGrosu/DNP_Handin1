@@ -1,0 +1,49 @@
+﻿@page "/adult/{Id:int}"
+@using Models
+@using DNP_Handin1.Data
+@inject IFileAdapter FileAdapter
+@inject NavigationManager NavigationManager
+
+@if (adultToShow == null)
+{
+    <h3>
+        An error occured. Please contact the developer.
+    </h3>
+}
+else
+{
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-10">
+                <h1>
+                    @adultToShow.FirstName @adultToShow.LastName, @adultToShow.Age
+                </h1>
+            </div>
+            <div class="col-md-2">
+                <button class="btn btn-outline-dark" @onclick="@GoBack">
+                    <span class="oi oi-arrow-thick-left" aria-hidden="true"></span>
+                    Back
+                </button>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+
+    [Parameter]
+    public int Id { get; set; }
+
+    private Adult adultToShow;
+
+    protected override async Task OnInitializedAsync()
+    {
+        Console.WriteLine(Id);
+        adultToShow = FileAdapter.GetAdultById(Id);
+    }
+
+    private void GoBack()
+    {
+        NavigationManager.NavigateTo("/adults");
+    }
+}

@@ -10,10 +10,13 @@
             <h1>Adults</h1>
         </div>
         <div class="col-md-2">
-            <button class="btn btn-outline-dark" @onclick="@GoToAddAdultPage">
-                Add adult
-                <span class="oi oi-arrow-thick-right" aria-hidden="true"></span>
-            </button>
+            <AuthorizeView Policy="MustBeADMIN">
+                <button class="btn btn-outline-success" @onclick="@(e => NavigationManager.NavigateTo("/addadult"))">
+                    Add adult
+                    <span class="oi oi-arrow-thick-right" aria-hidden="true"></span>
+                </button>
+            </AuthorizeView>
+
         </div>
     </div>
 </div>
@@ -68,7 +71,7 @@ else
         <tbody>
         @foreach (Adult adult in adultsToShow)
         {
-            <tr>
+            <tr @onclick="@(() => OpenDetailedAdultPage(adult.Id))">
                 <td>@adult.Id</td>
                 <td>@adult.FirstName</td>
                 <td>@adult.LastName</td>
@@ -83,6 +86,8 @@ else
 
 @code
 {
+    [CascadingParameter] protected Task<AuthenticationState> AuthState { get; set; }
+    
     private List<Adult> allAdults = new List<Adult>();
     private List<Adult> adultsToShow = new List<Adult>();
 
@@ -96,9 +101,13 @@ else
         ExecuteFilter();
     }
 
-    private void GoToAddAdultPage()
+    private async void OpenDetailedAdultPage(int id)
     {
-        NavigationManager.NavigateTo("/addadult");
+        var user = (await AuthState).User;
+        if (user.Identity.IsAuthenticated)
+        {
+            NavigationManager.NavigateTo($"/adult/{id}");
+        }
     }
 
     private void FilterById(ChangeEventArgs changeEventArgs)
@@ -150,8 +159,8 @@ else
 
     private void ExecuteFilter()
     {
-        adultsToShow = allAdults.Where(t => 
-            ((filterById != null && t.Id == filterById) || filterById == null) && 
+        adultsToShow = allAdults.Where(t =>
+            ((filterById != null && t.Id == filterById) || filterById == null) &&
             ((!filterByLastName.Equals("") && t.LastName.Contains(filterByLastName)) || filterByLastName.Equals("")) &&
             ((!filterByFirstName.Equals("") && t.FirstName.Contains(filterByFirstName)) || filterByFirstName.Equals(""))
             ).ToList();
