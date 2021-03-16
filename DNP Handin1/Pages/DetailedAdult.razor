@@ -26,7 +26,21 @@ else
                 </button>
             </div>
         </div>
+        <div class="row my-5">
+            <div class="col-4">
+                <AdultJobComponent JobToDisplay="@adultToShow.JobTitle"/>
+            </div>
+            <div class="col-md-2">
+            </div>
+            <div class="col-md-6">
+                <AdultDetailsComponent AdultToShow="@adultToShow"/>
+            </div>
+        </div>
+        <div class="my-5">
+            <AdultFamilyComponent MainAdult="@adultToShow"/>
+        </div>
     </div>
+    
 }
 
 @code {
@@ -38,7 +52,6 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        Console.WriteLine(Id);
         adultToShow = FileAdapter.GetAdultById(Id);
     }
 

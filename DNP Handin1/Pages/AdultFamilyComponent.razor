@@ -1,0 +1,131 @@
+﻿@using Models
+@using DNP_Handin1.Data
+@inject IFileAdapter FileAdapter
+@inject NavigationManager NavigationManager
+<h3>Family</h3>
+
+@if (FamilyToShow != null)
+{
+    <h6>#ID, @FamilyToShow.StreetName, @FamilyToShow.HouseNumber</h6>
+    <div class="container-fluid">
+        <div class="row my-3">
+            <div class="col-4 px-5">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Spouse</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @if (GetSpouse() != null)
+                    {
+                        <tr @onclick="@(() => OpenDetailedAdultPage(GetSpouse()))">
+                            <td>
+                                @GetSpouse().FirstName @GetSpouse().LastName
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        <tr>
+                            <td>
+                                Not married
+                            </td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-4 px5">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>@Children.Count</th>
+                        <th>Children</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach (Child child in Children)
+                    {
+                        <tr>
+                            <td></td>
+                            <td>@child.FirstName @child.LastName</td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-4 px-5">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>@Pets.Count</th>
+                        <th>Pets</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach (Pet pet in Pets)
+                    {
+                        <tr>
+                            <td></td>
+                            <td>@pet.Name, @pet.Species</td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <h6>
+        No data
+    </h6>
+}
+
+@code {
+
+    [CascadingParameter]
+    protected Task<AuthenticationState> AuthState { get; set; }
+
+    [Parameter]
+    public Adult MainAdult { get; set; }
+
+    private Family FamilyToShow;
+    private List<Child> Children;
+    private List<Pet> Pets;
+
+    protected override async Task OnInitializedAsync()
+    {
+        FamilyToShow = FileAdapter.GetFamilyWithAdult(MainAdult.Id);
+        if (FamilyToShow != null)
+        {
+            Children = FamilyToShow.Children;
+            Pets = FamilyToShow.Pets;
+        }
+    }
+
+    private Adult GetSpouse()
+    {
+        foreach (Adult adult in FamilyToShow.Adults)
+        {
+            if (adult.Id != MainAdult.Id)
+            {
+                return adult;
+            }
+        }
+        return null;
+    }
+
+
+    private async void OpenDetailedAdultPage(Adult adult)
+    {
+        var user = (await AuthState).User;
+        if (user.Identity.IsAuthenticated)
+        {
+            NavigationManager.NavigateTo($"/adult/{adult.Id}");
+        }
+    }
+
+}

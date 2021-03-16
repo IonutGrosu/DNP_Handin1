@@ -17,6 +17,22 @@ namespace DNP_Handin1.Data
             return (List<Family>) FileContext.Families;
         }
 
+        public Family GetFamilyWithAdult(int AdultId)
+        {
+            foreach (Family family in GetAllFamilies())
+            {
+                foreach (Adult familyAdult in family.Adults)
+                {
+                    if (familyAdult.Id == AdultId)
+                    {
+                        return family;
+                    }
+                }
+            }
+
+            return null;
+        }
+
         public List<Adult> GetAllAdults()
         {
             foreach (Adult fileContextAdult in FileContext.Adults)

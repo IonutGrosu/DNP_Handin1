@@ -1,0 +1,25 @@
+﻿@page "/jobcomp"
+@using Models
+<h3>Job</h3>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>Title</th>
+        <th>Salary</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>@JobToDisplay.JobTitle</td>
+        <td>$@JobToDisplay.Salary</td>
+    </tr>
+    </tbody>
+</table>
+
+@code {
+
+    [Parameter]
+    public Job JobToDisplay { get; set; } = new Job() {JobTitle = "Test", Salary = 12345};
+
+}

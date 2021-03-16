@@ -7,6 +7,7 @@ namespace DNP_Handin1.Data
     public interface IFileAdapter
     {
         public List<Family> GetAllFamilies();
+        public Family GetFamilyWithAdult(int AdultId);
         public List<Adult> GetAllAdults();
         public Adult GetAdultById(int id);
         public void AddAdult(Adult adult);
