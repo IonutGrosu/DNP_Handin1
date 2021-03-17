@@ -1,6 +1,9 @@
 ﻿@page "/jobcomp"
+@namespace DNP_Handin1.Pages.Jobs.JobComponent
 @using Models
+
 <h3>Job</h3>
+
 
 <table class="table">
     <thead>
@@ -12,7 +15,7 @@
     <tbody>
     <tr>
         <td>@JobToDisplay.JobTitle</td>
-        <td>$@JobToDisplay.Salary</td>
+        <td>$ @JobToDisplay.Salary</td>
     </tr>
     </tbody>
 </table>

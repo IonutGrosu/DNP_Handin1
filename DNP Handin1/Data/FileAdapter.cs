@@ -17,13 +17,13 @@ namespace DNP_Handin1.Data
             return (List<Family>) FileContext.Families;
         }
 
-        public Family GetFamilyWithAdult(int AdultId)
+        public Family GetFamilyWithAdult(int adultId)
         {
             foreach (Family family in GetAllFamilies())
             {
                 foreach (Adult familyAdult in family.Adults)
                 {
-                    if (familyAdult.Id == AdultId)
+                    if (familyAdult.Id == adultId)
                     {
                         return family;
                     }
@@ -59,6 +59,12 @@ namespace DNP_Handin1.Data
             {
                 WriteIndented = true
             }));
+        }
+
+        public void RemoveAdult(int id)
+        {
+            FileContext.Adults.Remove(FileContext.Adults.First(t => t.Id==id));
+            FileContext.SaveChanges();
         }
 
         public List<Job> GetAllJobs()

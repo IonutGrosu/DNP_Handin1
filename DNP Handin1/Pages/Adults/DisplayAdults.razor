@@ -4,6 +4,18 @@
 @inject IFileAdapter FileAdapter
 @inject NavigationManager NavigationManager
 
+<Modal @bind-Open="IsModalOpened" Close="OnClose">
+    <form method="dialog">
+        <p>
+            Are you sure you want to delete?
+        </p>
+        <menu>
+            <button value="cancel">Cancel</button>
+            <button value="confirm">I'm sure</button>
+        </menu>
+    </form>
+</Modal>
+
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-10">
@@ -16,11 +28,9 @@
                     <span class="oi oi-arrow-thick-right" aria-hidden="true"></span>
                 </button>
             </AuthorizeView>
-
         </div>
     </div>
 </div>
-
 
 @if (allAdults == null)
 {
@@ -66,18 +76,35 @@ else
             <th>Age</th>
             <th>Sex</th>
             <th>Job title</th>
+            <AuthorizeView Policy="MustBeADMIN">
+                <th>Remove</th>
+                <th>More details</th>
+            </AuthorizeView>
         </tr>
         </thead>
         <tbody>
         @foreach (Adult adult in adultsToShow)
         {
-            <tr @onclick="@(() => OpenDetailedAdultPage(adult.Id))">
+            <tr>
                 <td>@adult.Id</td>
                 <td>@adult.FirstName</td>
                 <td>@adult.LastName</td>
                 <td>@adult.Age</td>
                 <td>@adult.Sex</td>
                 <td>@adult.JobTitle.JobTitle</td>
+                <AuthorizeView Policy="MustBeADMIN">
+                    <td>
+                        <button class="btn btn-outline-danger" @onclick="@(() => {IsModalOpened = true; idToDelete = adult.Id;})">
+                            <i class="oi oi-circle-x"></i>
+                        </button>
+                    </td>
+                    <td>
+                        <button class="btn btn-outline-success" @onclick="@(() => OpenDetailedAdultPage(adult.Id))">
+                            <span class="oi oi-arrow-thick-right" aria-hidden="true"></span>
+                        </button>
+                    </td>
+                </AuthorizeView>
+
             </tr>
         }
         </tbody>
@@ -86,14 +113,19 @@ else
 
 @code
 {
-    [CascadingParameter] protected Task<AuthenticationState> AuthState { get; set; }
-    
+    [CascadingParameter]
+    protected Task<AuthenticationState> AuthState { get; set; }
+
+    public bool IsModalOpened { get; set; }
+    public string SelectedButton { get; set; }
+
     private List<Adult> allAdults = new List<Adult>();
     private List<Adult> adultsToShow = new List<Adult>();
 
     private int? filterById = null;
     private string filterByLastName = "";
     private string filterByFirstName = "";
+    private int idToDelete;
 
     protected override async Task OnInitializedAsync()
     {
@@ -166,4 +198,20 @@ else
             ).ToList();
     }
 
+    void OnClose(string value)
+    {
+        SelectedButton = value;
+        if (SelectedButton.Equals("confirm") && idToDelete >= 0)
+        {
+            RemoveAdult(idToDelete);
+            idToDelete = -1;
+        }
+    }
+
+    private void RemoveAdult(int id)
+    {
+        Console.WriteLine($"Removing adult {id}");
+        FileAdapter.RemoveAdult(id);
+        NavigationManager.NavigateTo("/adults");
+    }
 }

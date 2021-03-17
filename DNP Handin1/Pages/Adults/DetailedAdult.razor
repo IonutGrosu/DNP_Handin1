@@ -1,6 +1,7 @@
 ﻿@page "/adult/{Id:int}"
 @using Models
 @using DNP_Handin1.Data
+@using DNP_Handin1.Pages.Jobs.JobComponent
 @inject IFileAdapter FileAdapter
 @inject NavigationManager NavigationManager
 
@@ -28,7 +29,7 @@ else
         </div>
         <div class="row my-5">
             <div class="col-4">
-                <AdultJobComponent JobToDisplay="@adultToShow.JobTitle"/>
+                <JobComponent JobToDisplay="adultToShow.JobTitle"/>
             </div>
             <div class="col-md-2">
             </div>
