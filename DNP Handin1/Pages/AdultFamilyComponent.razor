@@ -17,11 +17,11 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @if (GetSpouse() != null)
+                    @if (Spouse != null)
                     {
-                        <tr @onclick="@(() => OpenDetailedAdultPage(GetSpouse()))">
+                        <tr>
                             <td>
-                                @GetSpouse().FirstName @GetSpouse().LastName
+                                @Spouse.FirstName @Spouse.LastName
                             </td>
                         </tr>
                     }
@@ -85,16 +85,13 @@ else
 }
 
 @code {
-
-    [CascadingParameter]
-    protected Task<AuthenticationState> AuthState { get; set; }
-
     [Parameter]
     public Adult MainAdult { get; set; }
 
     private Family FamilyToShow;
     private List<Child> Children;
     private List<Pet> Pets;
+    private Adult Spouse;
 
     protected override async Task OnInitializedAsync()
     {
@@ -104,28 +101,18 @@ else
             Children = FamilyToShow.Children;
             Pets = FamilyToShow.Pets;
         }
+        GetSpouse();
     }
 
-    private Adult GetSpouse()
+    private void GetSpouse()
     {
+        Spouse = null;
         foreach (Adult adult in FamilyToShow.Adults)
         {
             if (adult.Id != MainAdult.Id)
             {
-                return adult;
+                Spouse = adult;
             }
         }
-        return null;
     }
-
-
-    private async void OpenDetailedAdultPage(Adult adult)
-    {
-        var user = (await AuthState).User;
-        if (user.Identity.IsAuthenticated)
-        {
-            NavigationManager.NavigateTo($"/adult/{adult.Id}");
-        }
-    }
-
 }
