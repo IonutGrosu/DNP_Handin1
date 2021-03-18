@@ -1,0 +1,30 @@
+﻿@using Models
+
+<h3>Interests</h3>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (Interest interest in InterestsToDisplay)
+    {
+        <tr>
+            <td>
+                @interest.Type
+            </td>
+            <td>
+                @interest.Description
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+@code {
+    [Parameter]
+    public List<Interest> InterestsToDisplay { get; set; }
+}

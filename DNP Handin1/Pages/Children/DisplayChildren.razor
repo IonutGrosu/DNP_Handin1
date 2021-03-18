@@ -1,4 +1,4 @@
-﻿@page "/adults"
+﻿@page "/children"
 @using Models
 @using DNP_Handin1.Data
 @inject IFileAdapter FileAdapter
@@ -19,26 +19,18 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-10">
-            <h1>Adults</h1>
-        </div>
-        <div class="col-md-2">
-            <AuthorizeView Policy="MustBeADMIN">
-                <button class="btn btn-outline-success" @onclick="@(e => NavigationManager.NavigateTo("/addadult"))">
-                    Add adult
-                    <span class="oi oi-arrow-thick-right" aria-hidden="true"></span>
-                </button>
-            </AuthorizeView>
+            <h1>Children</h1>
         </div>
     </div>
 </div>
 
-@if (allAdults == null)
+@if (allChildren == null)
 {
     <p>
         <em>Loading..</em>
     </p>
 }
-else if (!allAdults.Any())
+else if (!allChildren.Any())
 {
     <p>
         <em>No data stored. Please add some</em>
@@ -75,7 +67,6 @@ else
             <th>Last name</th>
             <th>Age</th>
             <th>Sex</th>
-            <th>Job title</th>
             <AuthorizeView Policy="MustBeADMIN">
                 <th>Remove</th>
                 <th>Edit</th>
@@ -84,28 +75,27 @@ else
         </tr>
         </thead>
         <tbody>
-        @foreach (Adult adult in adultsToShow)
+        @foreach (Child child in childrenToShow)
         {
             <tr>
-                <td>@adult.Id</td>
-                <td>@adult.FirstName</td>
-                <td>@adult.LastName</td>
-                <td>@adult.Age</td>
-                <td>@adult.Sex</td>
-                <td>@adult.JobTitle.JobTitle</td>
+                <td>@child.Id</td>
+                <td>@child.FirstName</td>
+                <td>@child.LastName</td>
+                <td>@child.Age</td>
+                <td>@child.Sex</td>
                 <AuthorizeView Policy="MustBeADMIN">
                     <td>
-                        <button class="btn btn-outline-danger" @onclick="@(() => {IsModalOpened = true; idToDelete = adult.Id;})">
+                        <button class="btn btn-outline-danger" @onclick="@(() => {IsModalOpened = true; idToDelete = child.Id;})">
                             <i class="oi oi-circle-x"></i>
                         </button>
                     </td>
                     <td>
-                        <button class="btn btn-outline-warning" @onclick="@(e => NavigationManager.NavigateTo($"/editadult/{adult.Id}"))">
+                        <button class="btn btn-outline-warning" @onclick="@(e => NavigationManager.NavigateTo($"/editchild/{child.Id}"))">
                             <span class="oi oi-pencil" aria-hidden="true"></span>
                         </button>
                     </td>
                     <td>
-                        <button class="btn btn-outline-success" @onclick="@(() => OpenDetailedAdultPage(adult.Id))">
+                        <button class="btn btn-outline-success" @onclick="@(() => OpenDetailedChildPage(child.Id))">
                             <span class="oi oi-arrow-thick-right" aria-hidden="true"></span>
                         </button>
                     </td>
@@ -121,12 +111,12 @@ else
 {
     [CascadingParameter]
     protected Task<AuthenticationState> AuthState { get; set; }
-
+    
     public bool IsModalOpened { get; set; }
     public string SelectedButton { get; set; }
 
-    private List<Adult> allAdults = new List<Adult>();
-    private List<Adult> adultsToShow = new List<Adult>();
+    private List<Child> allChildren = new List<Child>();
+    private List<Child> childrenToShow = new List<Child>();
 
     private int? filterById = null;
     private string filterByLastName = "";
@@ -135,16 +125,16 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        allAdults = FileAdapter.GetAllAdults();
+        allChildren = FileAdapter.GetAllChildren();
         ExecuteFilter();
     }
 
-    private async void OpenDetailedAdultPage(int id)
+    private async void OpenDetailedChildPage(int id)
     {
         var user = (await AuthState).User;
         if (user.Identity.IsAuthenticated)
         {
-            NavigationManager.NavigateTo($"/adult/{id}");
+            NavigationManager.NavigateTo($"/child/{id}");
         }
     }
 
@@ -197,30 +187,30 @@ else
 
     private void ExecuteFilter()
     {
-        adultsToShow = allAdults.Where(t =>
+        childrenToShow = allChildren.Where(t =>
             ((filterById != null && t.Id == filterById) || filterById == null) &&
             ((!filterByLastName.Equals("") && t.LastName.Contains(filterByLastName)) || filterByLastName.Equals("")) &&
             ((!filterByFirstName.Equals("") && t.FirstName.Contains(filterByFirstName)) || filterByFirstName.Equals(""))
             ).ToList();
     }
-
+    
     void OnClose(string value)
     {
         SelectedButton = value;
         if (SelectedButton.Equals("confirm") && idToDelete >= 0)
         {
-            RemoveAdult(idToDelete);
+            RemoveChild(idToDelete);
             idToDelete = -1;
         }
     }
-
-    private void RemoveAdult(int id)
+    
+    private void RemoveChild(int id)
     {
-        Console.WriteLine($"Removing adult {id}");
-        FileAdapter.RemoveAdult(id);
+        Console.WriteLine($"Removing child {id}");
+        FileAdapter.RemoveChild(id);
         
         //reload list
-        allAdults = FileAdapter.GetAllAdults();
+        allChildren = FileAdapter.GetAllChildren();
         ExecuteFilter();
     }
 }

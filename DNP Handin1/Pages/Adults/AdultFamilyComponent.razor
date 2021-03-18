@@ -1,12 +1,12 @@
 ﻿@using Models
 @using DNP_Handin1.Data
+@using System.Net.Sockets
 @inject IFileAdapter FileAdapter
 @inject NavigationManager NavigationManager
-<h3>Family</h3>
 
+<h3>Family</h3>
 @if (FamilyToShow != null)
 {
-    <h6>#ID, @FamilyToShow.StreetName, @FamilyToShow.HouseNumber</h6>
     <div class="container-fluid">
         <div class="row my-3">
             <div class="col-4 px-5">
@@ -36,7 +36,7 @@
                     </tbody>
                 </table>
             </div>
-            <div class="col-4 px5">
+            <div class="col-4 px-5">
                 <table class="table">
                     <thead>
                     <tr>
@@ -85,6 +85,7 @@ else
 }
 
 @code {
+
     [Parameter]
     public Adult MainAdult { get; set; }
 
@@ -115,4 +116,5 @@ else
             }
         }
     }
+
 }

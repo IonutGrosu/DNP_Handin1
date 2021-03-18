@@ -1,0 +1,52 @@
+﻿@using Models
+@using DNP_Handin1.Data
+@inject IFileAdapter FileAdapter
+
+<h3>Brothers</h3>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Brothers</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (Child brother in Brothers)
+    {
+        <tr>
+            <td>@brother.Id</td>
+            <td>
+                @brother.FirstName @brother.LastName
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+@code {
+    [Parameter]
+    public Child MainChild { get; set; }
+
+    private List<Child> Brothers;
+
+    protected async override Task OnInitializedAsync()
+    {
+        Brothers = GetBrothers();
+    }
+
+    private List<Child> GetBrothers()
+    {
+        Family family = FileAdapter.GetFamilyWithChild(MainChild.Id);
+        List<Child> brothers = new List<Child>();
+        foreach (Child familyChild in family.Children)
+        {
+            if (familyChild.Id != MainChild.Id)
+            {
+                brothers.Add(familyChild);
+            }
+        }
+        return brothers;
+    }
+
+}

@@ -1,0 +1,117 @@
+﻿@page "/editchild/{Id:int}"
+@using Models
+@using DNP_Handin1.Data
+@inject IFileAdapter FileAdapter
+@inject NavigationManager NavigationManager
+
+<Modal @bind-Open="@IsModalOpened" Close="@OnModalClose">
+    <form method="dialog">
+            <p>
+                Do you really want to do this?
+            </p>
+            <menu>
+                <button value="cancel">Cancel</button>
+                <button value="confirm">I'm sure</button>
+            </menu>
+        </form>
+</Modal>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-10">
+            <h1>Edit @childToEditName</h1>
+        </div>
+        <div class="col-md-2">
+            <button class="btn btn-outline-dark" @onclick="@(e => NavigationManager.NavigateTo("/adults"))">
+                <span class="oi oi-arrow-thick-left" aria-hidden="true"></span>
+                Back
+            </button>
+        </div>
+    </div>
+</div>
+
+<EditForm Model="@childToEdit" OnValidSubmit="@SaveEditedChild">
+    <DataAnnotationsValidator/>
+    <ValidationSummary/>
+    <div class="form-group">
+        First name:<br/>
+        <InputText @bind-Value="childToEdit.FirstName"/>
+    </div>
+    <div class="form-group">
+        Last name:<br/>
+        <InputText @bind-Value="childToEdit.LastName"/>
+    </div>
+    <div class="form-group">
+        Hair color:<br/>
+        <InputText @bind-Value="childToEdit.HairColor"/>
+    </div>
+    <div class="form-group">
+        Eye color:<br/>
+        <InputText @bind-Value="childToEdit.EyeColor"/>
+    </div>
+    <div class="form-group">
+        Age:<br/>
+        <InputNumber @bind-Value="childToEdit.Age"/>
+    </div>
+    <div class="form-group">
+        Weight:<br/>
+        <InputNumber @bind-Value="childToEdit.Weight"/>
+    </div>
+    <div class="form-group">
+        Height:<br/>
+        <InputNumber @bind-Value="childToEdit.Height"/>
+    </div>
+    <div class="form-group">
+        Sex:<br/>
+        <InputSelect @bind-Value="childToEdit.Sex">
+            <option value="">Select sex</option>
+            <option value="F">Female</option>
+            <option value="M">Male</option>
+        </InputSelect>
+    </div>
+    @* <div class="form-group"> *@
+    @*     Job:<br/> *@
+    @*     <InputSelect @bind-Value="selectedJob"> *@
+    @*         <option value="">Select job</option> *@
+    @*         @foreach (var job in allJobs) *@
+    @*         { *@
+    @*             string jobValue = job.JobTitle; *@
+    @*             <option value="@jobValue">@job.JobTitle</option> *@
+    @*         } *@
+    @*     </InputSelect> *@
+    @* </div> *@
+    
+</EditForm>
+<button class="btn btn-outline-success" @onclick="e =>IsModalOpened=true">Edit child</button>
+
+@code {
+
+    [Parameter]
+    public int Id { get; set; }
+
+    public bool IsModalOpened { get; set; }
+
+    private Child childToEdit;
+    private string childToEditName;
+
+
+    protected async override Task OnInitializedAsync()
+    {
+        childToEdit = FileAdapter.GetChildById(Id);
+        childToEditName = $"{childToEdit.FirstName} {childToEdit.LastName}";
+    }
+
+    private void OnModalClose(string value)
+    {
+        if (value.Equals("confirm"))
+        {
+            SaveEditedChild();
+        }
+    }
+
+    private void SaveEditedChild()
+    {
+        FileAdapter.EditChild(childToEdit);
+        NavigationManager.NavigateTo("/children");
+    }
+}

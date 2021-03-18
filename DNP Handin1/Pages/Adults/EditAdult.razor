@@ -1,13 +1,25 @@
-﻿@page "/addadult"
+﻿@page "/editadult/{Id:int}"
 @using Models
 @using DNP_Handin1.Data
-@inject NavigationManager NavigationManager
 @inject IFileAdapter FileAdapter
+@inject NavigationManager NavigationManager
+
+<Modal @bind-Open="@IsModalOpened" Close="@OnModalClose">
+    <form method="dialog">
+            <p>
+                Do you really want to do this?
+            </p>
+            <menu>
+                <button value="cancel">Cancel</button>
+                <button value="confirm">I'm sure</button>
+            </menu>
+        </form>
+</Modal>
 
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-10">
-            <h1>Add Adult</h1>
+            <h1>Edit @adultToEditName</h1>
         </div>
         <div class="col-md-2">
             <button class="btn btn-outline-dark" @onclick="@(e => NavigationManager.NavigateTo("/adults"))">
@@ -18,41 +30,40 @@
     </div>
 </div>
 
-
-<EditForm Model="@newAdult" OnValidSubmit="@SaveCreatedAdult">
+<EditForm Model="@adultToEdit" OnValidSubmit="@SaveEditedAdult">
     <DataAnnotationsValidator/>
     <ValidationSummary/>
     <div class="form-group">
         First name:<br/>
-        <InputText @bind-Value="newAdult.FirstName"/>
+        <InputText @bind-Value="adultToEdit.FirstName"/>
     </div>
     <div class="form-group">
         Last name:<br/>
-        <InputText @bind-Value="newAdult.LastName"/>
+        <InputText @bind-Value="adultToEdit.LastName"/>
     </div>
     <div class="form-group">
         Hair color:<br/>
-        <InputText @bind-Value="newAdult.HairColor"/>
+        <InputText @bind-Value="adultToEdit.HairColor"/>
     </div>
     <div class="form-group">
         Eye color:<br/>
-        <InputText @bind-Value="newAdult.EyeColor"/>
+        <InputText @bind-Value="adultToEdit.EyeColor"/>
     </div>
     <div class="form-group">
         Age:<br/>
-        <InputNumber @bind-Value="newAdult.Age"/>
+        <InputNumber @bind-Value="adultToEdit.Age"/>
     </div>
     <div class="form-group">
         Weight:<br/>
-        <InputNumber @bind-Value="newAdult.Weight"/>
+        <InputNumber @bind-Value="adultToEdit.Weight"/>
     </div>
     <div class="form-group">
         Height:<br/>
-        <InputNumber @bind-Value="newAdult.Height"/>
+        <InputNumber @bind-Value="adultToEdit.Height"/>
     </div>
     <div class="form-group">
         Sex:<br/>
-        <InputSelect @bind-Value="newAdult.Sex">
+        <InputSelect @bind-Value="adultToEdit.Sex">
             <option value="">Select sex</option>
             <option value="F">Female</option>
             <option value="M">Male</option>
@@ -69,28 +80,42 @@
             }
         </InputSelect>
     </div>
-    <p class="actions">
-        <button class="btn btn-outline-dark" type="submit">Save adult</button>
-    </p>
+    
 </EditForm>
+<button class="btn btn-outline-success" @onclick="e =>IsModalOpened=true">Edit adult</button>
 
 @code {
-    private Adult newAdult = new Adult();
-    private List<Job> allJobs;
 
+    [Parameter]
+    public int Id { get; set; }
+
+    public bool IsModalOpened { get; set; }
+
+    private Adult adultToEdit;
+    private string adultToEditName;
+    private List<Job> allJobs;
     private string selectedJob;
 
-    protected override async Task OnInitializedAsync()
+    protected async override Task OnInitializedAsync()
     {
+        adultToEdit = FileAdapter.GetAdultById(Id);
+        adultToEditName = $"{adultToEdit.FirstName} {adultToEdit.LastName}";
+        selectedJob = adultToEdit.JobTitle.JobTitle;
         allJobs = FileAdapter.GetAllJobs();
     }
 
-    private void SaveCreatedAdult()
+    private void OnModalClose(string value)
     {
-    //assign selectedJob into newAdult
-        AssignSelectedJob();
+        if (value.Equals("confirm"))
+        {
+            SaveEditedAdult();
+        }
+    }
 
-        FileAdapter.AddAdult(newAdult);
+    private void SaveEditedAdult()
+    {
+        AssignSelectedJob();
+        FileAdapter.EditAdult(adultToEdit);
         NavigationManager.NavigateTo("/adults");
     }
 
@@ -105,7 +130,7 @@
             }
         }
 
-        newAdult.JobTitle = temp;
+        adultToEdit.JobTitle = temp;
     }
 
 }

@@ -1,0 +1,30 @@
+﻿@using Models
+
+<h3>Pets</h3>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Species</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (Pet pet in PetsToDisplay)
+    {
+        <tr>
+            <td>
+                @pet.Name
+            </td>
+            <td>
+               @pet.Species
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+@code {
+    [Parameter]
+    public List<Pet> PetsToDisplay { get; set; }
+}

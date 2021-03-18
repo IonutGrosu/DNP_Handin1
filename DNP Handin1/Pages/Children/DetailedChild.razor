@@ -1,11 +1,10 @@
-﻿@page "/adult/{Id:int}"
+﻿@page "/child/{Id:int}"
 @using Models
 @using DNP_Handin1.Data
-@using DNP_Handin1.Pages.Jobs.JobComponent
 @inject IFileAdapter FileAdapter
 @inject NavigationManager NavigationManager
 
-@if (adultToShow == null)
+@if (childToShow == null)
 {
     <h3>
         An error occured. Please contact the developer.
@@ -17,7 +16,7 @@ else
         <div class="row">
             <div class="col-md-10">
                 <h1>
-                    @adultToShow.FirstName @adultToShow.LastName, @adultToShow.Age
+                    @childToShow.FirstName @childToShow.LastName, @childToShow.Age
                 </h1>
             </div>
             <div class="col-md-2">
@@ -28,19 +27,28 @@ else
             </div>
         </div>
         <div class="row my-5">
-            <div class="col-4 py-5">
-                <JobComponent JobToDisplay="adultToShow.JobTitle"/>
+            <div class="col-4">
+                <ChildParentsComponent MainChild="@childToShow"/>
             </div>
-            <div class="col-md-2">
+            <div class="col-2">
             </div>
-            <div class="col-md-6">
-                <PersonDetailsComponent PersonToShow="adultToShow"/>
+            <div class="col-6">
+                <PersonDetailsComponent PersonToShow="@childToShow"/>
             </div>
         </div>
         <div class="row my-5">
-            <AdultFamilyComponent MainAdult="@adultToShow"/>
+            <div class="col-4 px-5">
+                <ChildBrothersComponent MainChild="@childToShow"/>
+            </div>
+            <div class="col-4 px-5">
+                <ChildInterestsComponent InterestsToDisplay="@childToShow.Interests"/>
+            </div>
+            <div class="col-4 px-5">
+                <ChildPetsComponent PetsToDisplay="@childToShow.Pets"/>
+            </div>
         </div>
     </div>
+    
 }
 
 @code {
@@ -48,16 +56,15 @@ else
     [Parameter]
     public int Id { get; set; }
 
-    private Adult adultToShow;
+    private Child childToShow;
 
     protected override async Task OnInitializedAsync()
     {
-        adultToShow = FileAdapter.GetAdultById(Id);
+        childToShow = FileAdapter.GetChildById(Id);
     }
 
     private void GoBack()
     {
-        NavigationManager.NavigateTo("/adults");
+        NavigationManager.NavigateTo("/children");
     }
-
 }
