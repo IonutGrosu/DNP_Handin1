@@ -21,8 +21,8 @@ namespace DNP_Handin1.Data
                 },
                 new User
                 {
-                    UserName = "IonutGrosu",
-                    Password = "pass123",
+                    UserName = "ionut",
+                    Password = "password123",
                     Role = "CLERK"
                 }
             }.ToList();

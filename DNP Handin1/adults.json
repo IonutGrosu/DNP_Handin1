@@ -1,21 +1,6 @@
 [
   {
     "JobTitle": {
-      "JobTitle": "Mascot",
-      "Salary": 99821
-    },
-    "Id": 0,
-    "FirstName": "Yasmine",
-    "LastName": "Baxter",
-    "HairColor": "Black",
-    "EyeColor": "Brown",
-    "Age": 58,
-    "Weight": 39.8,
-    "Height": 174,
-    "Sex": "F"
-  },
-  {
-    "JobTitle": {
       "JobTitle": "Front End Web Developer",
       "Salary": 66408
     },
@@ -253,5 +238,35 @@
     "Weight": 65,
     "Height": 182,
     "Sex": "M"
+  },
+  {
+    "JobTitle": {
+      "JobTitle": "Nurse",
+      "Salary": 36813
+    },
+    "Id": 16,
+    "FirstName": "Test",
+    "LastName": "Adult",
+    "HairColor": "Blue",
+    "EyeColor": "Yellow",
+    "Age": 45,
+    "Weight": 75,
+    "Height": 172,
+    "Sex": "M"
+  },
+  {
+    "JobTitle": {
+      "JobTitle": "Vice Principal",
+      "Salary": 72901
+    },
+    "Id": 16,
+    "FirstName": "test",
+    "LastName": "test",
+    "HairColor": "test",
+    "EyeColor": "test",
+    "Age": 55,
+    "Weight": 45,
+    "Height": 172,
+    "Sex": "F"
   }
 ]

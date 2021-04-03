@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DNP Handin1", "DNP Handin1\DNP Handin1.csproj", "{117D9B8C-8C21-40CB-8034-D1BFB2CC0869}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestServer", "RestServer\RestServer.csproj", "{F34FB47C-9237-43C6-826D-0E63DB4672E7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{117D9B8C-8C21-40CB-8034-D1BFB2CC0869}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{117D9B8C-8C21-40CB-8034-D1BFB2CC0869}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{117D9B8C-8C21-40CB-8034-D1BFB2CC0869}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F34FB47C-9237-43C6-826D-0E63DB4672E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F34FB47C-9237-43C6-826D-0E63DB4672E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F34FB47C-9237-43C6-826D-0E63DB4672E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F34FB47C-9237-43C6-826D-0E63DB4672E7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
