@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
+using System.Net.Http;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Models;
 
@@ -7,9 +10,23 @@ namespace DNP_Handin1.Data
 {
     public class RestAdapter : IDataAdapter
     {
-        public Task<List<Family>> GetAllFamiliesAsync()
+        public async Task<List<Family>> GetAllFamiliesAsync()
         {
-            throw new System.NotImplementedException();
+            HttpClient client = new HttpClient();
+            HttpResponseMessage responseMessage = await client.GetAsync("https://localhost:5001/families");
+
+            if (!responseMessage.IsSuccessStatusCode)
+            {
+                throw new Exception($"Error: {responseMessage.StatusCode}, {responseMessage.ReasonPhrase}");
+            }
+
+            string result = await responseMessage.Content.ReadAsStringAsync();
+            List<Family> families = JsonSerializer.Deserialize<List<Family>>(result, new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            });
+
+            return families;
         }
 
         public Task<Family> GetFamilyWithAdultAsync(int adultId)

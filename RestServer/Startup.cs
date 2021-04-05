@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DNP_Handin1.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -31,6 +32,7 @@ namespace RestServer
             {
                 c.SwaggerDoc("v1", new OpenApiInfo {Title = "RestServer", Version = "v1"});
             });
+            services.AddScoped<IFileAdapter, FileAdapter>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
