@@ -1,7 +1,7 @@
 ﻿@page "/editchild/{Id:int}"
 @using Models
 @using DNP_Handin1.Data
-@inject IFileAdapter FileAdapter
+@inject IDataAdapter FileAdapter
 @inject NavigationManager NavigationManager
 
 <Modal @bind-Open="@IsModalOpened" Close="@OnModalClose">
@@ -97,7 +97,7 @@
 
     protected async override Task OnInitializedAsync()
     {
-        childToEdit = FileAdapter.GetChildById(Id);
+        childToEdit = await FileAdapter.GetChildByIdAsync(Id);
         childToEditName = $"{childToEdit.FirstName} {childToEdit.LastName}";
     }
 
@@ -111,7 +111,7 @@
 
     private void SaveEditedChild()
     {
-        FileAdapter.EditChild(childToEdit);
+        FileAdapter.EditChildAsync(childToEdit);
         NavigationManager.NavigateTo("/children");
     }
 }

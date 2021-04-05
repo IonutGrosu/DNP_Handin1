@@ -2,7 +2,7 @@
 @using Models
 @using DNP_Handin1.Data
 @using DNP_Handin1.Pages.Jobs.JobComponent
-@inject IFileAdapter FileAdapter
+@inject IDataAdapter FileAdapter
 @inject NavigationManager NavigationManager
 
 @if (adultToShow == null)
@@ -52,7 +52,7 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        adultToShow = FileAdapter.GetAdultById(Id);
+        adultToShow = await FileAdapter.GetAdultByIdAsync(Id);
     }
 
     private void GoBack()

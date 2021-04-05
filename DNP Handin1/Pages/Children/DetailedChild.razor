@@ -1,7 +1,7 @@
 ﻿@page "/child/{Id:int}"
 @using Models
 @using DNP_Handin1.Data
-@inject IFileAdapter FileAdapter
+@inject IDataAdapter FileAdapter
 @inject NavigationManager NavigationManager
 
 @if (childToShow == null)
@@ -60,7 +60,7 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        childToShow = FileAdapter.GetChildById(Id);
+        childToShow = await FileAdapter.GetChildByIdAsync(Id);
     }
 
     private void GoBack()

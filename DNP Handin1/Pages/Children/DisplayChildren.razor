@@ -1,7 +1,7 @@
 ﻿@page "/children"
 @using Models
 @using DNP_Handin1.Data
-@inject IFileAdapter FileAdapter
+@inject IDataAdapter FileAdapter
 @inject NavigationManager NavigationManager
 
 <Modal @bind-Open="IsModalOpened" Close="OnClose">
@@ -125,7 +125,7 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        allChildren = FileAdapter.GetAllChildren();
+        allChildren = await FileAdapter.GetAllChildrenAsync();
         ExecuteFilter();
     }
 
@@ -199,18 +199,18 @@ else
         SelectedButton = value;
         if (SelectedButton.Equals("confirm") && idToDelete >= 0)
         {
-            RemoveChild(idToDelete);
+            RemoveChildAsync(idToDelete);
             idToDelete = -1;
         }
     }
     
-    private void RemoveChild(int id)
+    private async Task RemoveChildAsync(int id)
     {
         Console.WriteLine($"Removing child {id}");
-        FileAdapter.RemoveChild(id);
+        FileAdapter.RemoveChildAsync(id);
         
         //reload list
-        allChildren = FileAdapter.GetAllChildren();
+        allChildren = await FileAdapter.GetAllChildrenAsync();
         ExecuteFilter();
     }
 }

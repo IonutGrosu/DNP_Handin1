@@ -2,7 +2,7 @@
 @using Models
 @using DNP_Handin1.Data
 @inject NavigationManager NavigationManager
-@inject IFileAdapter FileAdapter
+@inject IDataAdapter FileAdapter
 
 <div class="container-fluid">
     <div class="row">
@@ -82,7 +82,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        allJobs = FileAdapter.GetAllJobs();
+        allJobs = await FileAdapter.GetAllJobsAsync();
     }
 
     private void SaveCreatedAdult()
@@ -90,7 +90,7 @@
     //assign selectedJob into newAdult
         AssignSelectedJob();
 
-        FileAdapter.AddAdult(newAdult);
+        FileAdapter.AddAdultAsync(newAdult);
         NavigationManager.NavigateTo("/adults");
     }
 

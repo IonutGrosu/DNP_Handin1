@@ -1,7 +1,7 @@
 ﻿@using Models
 @using DNP_Handin1.Data
 @using System.Net.Sockets
-@inject IFileAdapter FileAdapter
+@inject IDataAdapter FileAdapter
 @inject NavigationManager NavigationManager
 
 <h3>Family</h3>
@@ -96,7 +96,7 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        FamilyToShow = FileAdapter.GetFamilyWithAdult(MainAdult.Id);
+        FamilyToShow = await FileAdapter.GetFamilyWithAdultAsync(MainAdult.Id);
         if (FamilyToShow != null)
         {
             Children = FamilyToShow.Children;

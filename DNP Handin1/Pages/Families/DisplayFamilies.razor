@@ -1,7 +1,7 @@
 ﻿@page "/families"
 @using Models
 @using Data
-@inject IFileAdapter FileAdapter
+@inject IDataAdapter FileAdapter
 
 <h1>Families</h1>
 
@@ -51,7 +51,7 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        Families = FileAdapter.GetAllFamilies();
+        Families = await FileAdapter.GetAllFamiliesAsync();
     }
 
 }

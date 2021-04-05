@@ -1,7 +1,7 @@
 ﻿@page "/editadult/{Id:int}"
 @using Models
 @using DNP_Handin1.Data
-@inject IFileAdapter FileAdapter
+@inject IDataAdapter FileAdapter
 @inject NavigationManager NavigationManager
 
 <Modal @bind-Open="@IsModalOpened" Close="@OnModalClose">
@@ -98,10 +98,10 @@
 
     protected async override Task OnInitializedAsync()
     {
-        adultToEdit = FileAdapter.GetAdultById(Id);
+        adultToEdit = await FileAdapter.GetAdultByIdAsync(Id);
         adultToEditName = $"{adultToEdit.FirstName} {adultToEdit.LastName}";
         selectedJob = adultToEdit.JobTitle.JobTitle;
-        allJobs = FileAdapter.GetAllJobs();
+        allJobs = await FileAdapter.GetAllJobsAsync();
     }
 
     private void OnModalClose(string value)
@@ -115,7 +115,7 @@
     private void SaveEditedAdult()
     {
         AssignSelectedJob();
-        FileAdapter.EditAdult(adultToEdit);
+        FileAdapter.EditAdultAsync(adultToEdit);
         NavigationManager.NavigateTo("/adults");
     }
 

@@ -1,7 +1,7 @@
 ﻿@page "/jobs"
 @using Models
 @using DNP_Handin1.Data
-@inject IFileAdapter FileAdapter
+@inject IDataAdapter FileAdapter
 
 <h1>Jobs</h1>
 
@@ -28,7 +28,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        allJobs = FileAdapter.GetAllJobs();
+        allJobs = await FileAdapter.GetAllJobsAsync();
     }
 
 }

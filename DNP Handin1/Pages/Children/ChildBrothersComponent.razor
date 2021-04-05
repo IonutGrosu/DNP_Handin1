@@ -1,6 +1,6 @@
 ﻿@using Models
 @using DNP_Handin1.Data
-@inject IFileAdapter FileAdapter
+@inject IDataAdapter FileAdapter
 
 <h3>Brothers</h3>
 
@@ -32,12 +32,12 @@
 
     protected async override Task OnInitializedAsync()
     {
-        Brothers = GetBrothers();
+        Brothers = await GetBrothersAsync();
     }
 
-    private List<Child> GetBrothers()
+    private async Task<List<Child>> GetBrothersAsync()
     {
-        Family family = FileAdapter.GetFamilyWithChild(MainChild.Id);
+        Family family = await FileAdapter.GetFamilyWithChildAsync(MainChild.Id);
         List<Child> brothers = new List<Child>();
         foreach (Child familyChild in family.Children)
         {
