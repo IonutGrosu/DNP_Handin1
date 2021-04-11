@@ -5,23 +5,38 @@
 
 <h1>Jobs</h1>
 
-<table class="table">
-    <thead>
-    <tr>
-        <th>Title</th>
-        <th>Salary</th>
-    </tr>
-    </thead>
-    <tbody>
-    @foreach (Job job in allJobs)
-    {
+@if (allJobs == null)
+{
+    <p>
+        <em>Loading..</em>
+    </p>
+}
+else if (!allJobs.Any())
+{
+    <p>
+        <em>No data stored. Please add some</em>
+    </p>
+}
+else
+{
+    <table class="table">
+        <thead>
         <tr>
-            <td>@job.JobTitle</td>
-            <td>$ @job.Salary</td>
+            <th>Title</th>
+            <th>Salary</th>
         </tr>
-    }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+        @foreach (Job job in allJobs)
+        {
+            <tr>
+                <td>@job.JobTitle</td>
+                <td>$ @job.Salary</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
 
 @code {
     private List<Job> allJobs;
@@ -29,6 +44,8 @@
     protected override async Task OnInitializedAsync()
     {
         allJobs = await FileAdapter.GetAllJobsAsync();
+        Console.WriteLine($"Jobs received by client: {allJobs.Count}");
+        Console.WriteLine(allJobs[0].JobTitle);
     }
 
 }

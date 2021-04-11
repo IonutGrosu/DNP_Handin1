@@ -29,19 +29,64 @@ namespace DNP_Handin1.Data
             return families;
         }
 
-        public Task<Family> GetFamilyWithAdultAsync(int adultId)
+        public async Task<Family> GetFamilyWithAdultAsync(int adultId)
         {
-            throw new System.NotImplementedException();
+            HttpClient client = new HttpClient();
+            HttpResponseMessage responseMessage = await client.GetAsync($"https://localhost:5001/families/adult/{adultId}");
+            
+            if (!responseMessage.IsSuccessStatusCode)
+            {
+                throw new Exception($"Error: {responseMessage.StatusCode}, {responseMessage.ReasonPhrase}");
+            }
+
+            string result = await responseMessage.Content.ReadAsStringAsync();
+
+            Family family = JsonSerializer.Deserialize<Family>(result, new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            });
+
+            return family;
         }
 
-        public Task<Family> GetFamilyWithChildAsync(int childId)
+        public async Task<Family> GetFamilyWithChildAsync(int childId)
         {
-            throw new System.NotImplementedException();
+            HttpClient client = new HttpClient();
+            HttpResponseMessage responseMessage =
+                await client.GetAsync($"https://localhost:5001/families/child/{childId}");
+            
+            if (!responseMessage.IsSuccessStatusCode)
+            {
+                throw new Exception($"Error: {responseMessage.StatusCode}, {responseMessage.ReasonPhrase}");
+            }
+
+            string result = await responseMessage.Content.ReadAsStringAsync();
+
+            Family family = JsonSerializer.Deserialize<Family>(result, new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            });
+
+            return family;
         }
 
-        public Task<List<Adult>> GetAllAdultsAsync()
+        public async Task<List<Adult>> GetAllAdultsAsync()
         {
-            throw new System.NotImplementedException();
+            HttpClient client = new HttpClient();
+            HttpResponseMessage responseMessage = await client.GetAsync("https://localhost:5001/adults");
+
+            if (!responseMessage.IsSuccessStatusCode)
+            {
+                throw new Exception($"Error: {responseMessage.StatusCode}, {responseMessage.ReasonPhrase}");
+            }
+
+            string result = await responseMessage.Content.ReadAsStringAsync();
+            List<Adult> adults = JsonSerializer.Deserialize<List<Adult>>(result, new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            });
+
+            return adults;
         }
 
         public Task<Adult> GetAdultByIdAsync(int id)
@@ -64,9 +109,23 @@ namespace DNP_Handin1.Data
             throw new System.NotImplementedException();
         }
 
-        public Task<List<Child>> GetAllChildrenAsync()
+        public async Task<List<Child>> GetAllChildrenAsync()
         {
-            throw new System.NotImplementedException();
+            HttpClient client = new HttpClient();
+            HttpResponseMessage responseMessage = await client.GetAsync("https://localhost:5001/children");
+            
+            if (!responseMessage.IsSuccessStatusCode)
+            {
+                throw new Exception($"Error: {responseMessage.StatusCode}, {responseMessage.ReasonPhrase}");
+            }
+
+            string result = await responseMessage.Content.ReadAsStringAsync();
+            List<Child> children = JsonSerializer.Deserialize<List<Child>>(result, new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            });
+
+            return children;
         }
 
         public Task<Child> GetChildByIdAsync(int id)
@@ -84,9 +143,22 @@ namespace DNP_Handin1.Data
             throw new System.NotImplementedException();
         }
 
-        public Task<List<Job>> GetAllJobsAsync()
+        public async Task<List<Job>> GetAllJobsAsync()
         {
-            throw new System.NotImplementedException();
+            HttpClient client = new HttpClient();
+            HttpResponseMessage responseMessage = await client.GetAsync("https://localhost:5001/jobs");
+            
+            if (!responseMessage.IsSuccessStatusCode)
+            {
+                throw new Exception($"Error: {responseMessage.StatusCode}, {responseMessage.ReasonPhrase}");
+            }
+
+            string result = await responseMessage.Content.ReadAsStringAsync();
+            List<Job> jobs = JsonSerializer.Deserialize<List<Job>>(result, new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            });
+            return jobs;
         }
     }
 }

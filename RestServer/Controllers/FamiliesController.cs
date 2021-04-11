@@ -24,13 +24,44 @@ namespace RestServer.Controllers
             try
             {
                 IList<Family> families = fileAdapter.GetAllFamilies();
-                Console.WriteLine(families.Count);
                 return Ok(families);
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
                 return StatusCode(500, e.Message);
+            }
+        }
+
+        [HttpGet]
+        [Route("adult/{id:int}")]
+        public async Task<ActionResult<Family>> GetFamilyWithAdult([FromRoute] int id)
+        {
+            try
+            {
+                Family family = fileAdapter.GetFamilyWithAdult(id);
+                return Ok(family);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+        
+        [HttpGet]
+        [Route("child/{id:int}")]
+        public async Task<ActionResult<Family>> GetFamilyWithChild([FromRoute] int id)
+        {
+            try
+            {
+                Family family = fileAdapter.GetFamilyWithChild(id);
+                return Ok(family);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
             }
         }
     }
