@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Net.Http;
+using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Models;
@@ -89,24 +90,56 @@ namespace DNP_Handin1.Data
             return adults;
         }
 
-        public Task<Adult> GetAdultByIdAsync(int id)
+        public async Task<Adult> GetAdultByIdAsync(int id)
         {
-            throw new System.NotImplementedException();
+            HttpClient client = new HttpClient();
+            HttpResponseMessage responseMessage = await client.GetAsync($"https://localhost:5001/adults/{id}");
+
+            if (!responseMessage.IsSuccessStatusCode)
+            {
+                throw new Exception($"Error: {responseMessage.StatusCode}, {responseMessage.ReasonPhrase}");
+            }
+
+            string result = await responseMessage.Content.ReadAsStringAsync();
+            Adult adult = JsonSerializer.Deserialize<Adult>(result, new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            });
+            return adult;
         }
 
-        public Task AddAdultAsync(Adult adult)
+        public async Task AddAdultAsync(Adult adult)
         {
-            throw new System.NotImplementedException();
+            HttpClient client = new HttpClient();
+            string adultAsJson = JsonSerializer.Serialize(adult);
+            StringContent content = new StringContent(adultAsJson, Encoding.UTF8, "application/json");
+            HttpResponseMessage responseMessage = await client.PostAsync("https://localhost:5001/adults", content);
+            if (!responseMessage.IsSuccessStatusCode)
+            {
+                throw new Exception($"Error: {responseMessage.StatusCode}, {responseMessage.ReasonPhrase}");
+            }
         }
 
-        public Task RemoveAdultAsync(int id)
+        public async Task RemoveAdultAsync(int id)
         {
-            throw new System.NotImplementedException();
+            HttpClient client = new HttpClient();
+            HttpResponseMessage responseMessage = await client.DeleteAsync($"https://localhost:5001/adults/{id}");
+            if (!responseMessage.IsSuccessStatusCode)
+            {
+                throw new Exception($"Error:{responseMessage.StatusCode}, {responseMessage.ReasonPhrase}");
+            }
         }
 
-        public Task EditAdultAsync(Adult editedAdult)
+        public async Task EditAdultAsync(Adult editedAdult)
         {
-            throw new System.NotImplementedException();
+            HttpClient client = new HttpClient();
+            string adultAsJson = JsonSerializer.Serialize(editedAdult);
+            StringContent content = new StringContent(adultAsJson, Encoding.UTF8, "application/json");
+            HttpResponseMessage responseMessage = await client.PatchAsync("https://localhost:5001/adults", content);
+            if (!responseMessage.IsSuccessStatusCode)
+            {
+                throw new Exception($"Error: {responseMessage.StatusCode}, {responseMessage.ReasonPhrase}");
+            }
         }
 
         public async Task<List<Child>> GetAllChildrenAsync()
@@ -128,19 +161,44 @@ namespace DNP_Handin1.Data
             return children;
         }
 
-        public Task<Child> GetChildByIdAsync(int id)
+        public async Task<Child> GetChildByIdAsync(int id)
         {
-            throw new System.NotImplementedException();
+            HttpClient client = new HttpClient();
+            HttpResponseMessage responseMessage = await client.GetAsync($"https://localhost:5001/children/{id}");
+
+            if (!responseMessage.IsSuccessStatusCode)
+            {
+                throw new Exception($"Error: {responseMessage.StatusCode}, {responseMessage.ReasonPhrase}");
+            }
+
+            string result = await responseMessage.Content.ReadAsStringAsync();
+            Child child = JsonSerializer.Deserialize<Child>(result, new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            });
+            return child;
         }
 
-        public Task RemoveChildAsync(int id)
+        public async Task RemoveChildAsync(int id)
         {
-            throw new System.NotImplementedException();
+            HttpClient client = new HttpClient();
+            HttpResponseMessage responseMessage = await client.DeleteAsync($"https://localhost:5001/children/{id}");
+            if (!responseMessage.IsSuccessStatusCode)
+            {
+                throw new Exception($"Error:{responseMessage.StatusCode}, {responseMessage.ReasonPhrase}");
+            }
         }
 
-        public Task EditChildAsync(Child editedChild)
+        public async Task EditChildAsync(Child editedChild)
         {
-            throw new System.NotImplementedException();
+            HttpClient client = new HttpClient();
+            string adultAsJson = JsonSerializer.Serialize(editedChild);
+            StringContent content = new StringContent(adultAsJson, Encoding.UTF8, "application/json");
+            HttpResponseMessage responseMessage = await client.PatchAsync("https://localhost:5001/children", content);
+            if (!responseMessage.IsSuccessStatusCode)
+            {
+                throw new Exception($"Error: {responseMessage.StatusCode}, {responseMessage.ReasonPhrase}");
+            }
         }
 
         public async Task<List<Job>> GetAllJobsAsync()

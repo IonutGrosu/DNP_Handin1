@@ -71,6 +71,7 @@ namespace DNP_Handin1.Data
             adult.Id = AdultID++;
             // FileContext.Adults.Add(adult);
             // FileContext.SaveChanges();
+            //TODO uncomment this
             Console.WriteLine(JsonSerializer.Serialize(adult, new JsonSerializerOptions
             {
                 WriteIndented = true
@@ -87,6 +88,7 @@ namespace DNP_Handin1.Data
         {
             foreach (Adult fileContextAdult in FileContext.Adults)
             {
+                if (fileContextAdult.Id == editedAdult.Id)
                 {
                     fileContextAdult.JobTitle = editedAdult.JobTitle;
                     fileContextAdult.FirstName = editedAdult.FirstName;

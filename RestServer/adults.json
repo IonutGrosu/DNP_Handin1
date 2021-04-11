@@ -1,21 +1,6 @@
 [
   {
     "JobTitle": {
-      "JobTitle": "Mascot",
-      "Salary": 99821
-    },
-    "Id": 0,
-    "FirstName": "Yasmine",
-    "LastName": "Baxter",
-    "HairColor": "Black",
-    "EyeColor": "Brown",
-    "Age": 58,
-    "Weight": 39.8,
-    "Height": 174,
-    "Sex": "F"
-  },
-  {
-    "JobTitle": {
       "JobTitle": "Front End Web Developer",
       "Salary": 66408
     },
@@ -42,21 +27,6 @@
     "Age": 34,
     "Weight": 37,
     "Height": 145,
-    "Sex": "F"
-  },
-  {
-    "JobTitle": {
-      "JobTitle": "Skin Care Specialist",
-      "Salary": 20545
-    },
-    "Id": 3,
-    "FirstName": "Chaya",
-    "LastName": "Mcclure",
-    "HairColor": "Black",
-    "EyeColor": "Brown",
-    "Age": 59,
-    "Weight": 32.4,
-    "Height": 167,
     "Sex": "F"
   },
   {

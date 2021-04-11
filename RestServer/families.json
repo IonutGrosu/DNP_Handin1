@@ -9,13 +9,13 @@
           "Salary": 99821
         },
         "Id": 0,
-        "FirstName": "Yasmine",
+        "FirstName": "Don",
         "LastName": "Baxter",
         "HairColor": "Black",
         "EyeColor": "Brown",
         "Age": 58,
         "Weight": 39.8,
-        "Height": 174,
+        "Height": 169,
         "Sex": "F"
       }
     ],
@@ -58,54 +58,6 @@
       }
     ],
     "Children": [
-      {
-        "Interests": [
-          {
-            "Type": "Board Games",
-            "Description": "Boardgaming like a family"
-          },
-          {
-            "Type": "Archery",
-            "Description": "Old sport with bow and arrow"
-          },
-          {
-            "Type": "Gaming",
-            "Description": "#PCMASTERRACE"
-          }
-        ],
-        "Pets": [],
-        "Id": 1,
-        "FirstName": "Frederick",
-        "LastName": "Humphrey",
-        "HairColor": "Black",
-        "EyeColor": "Amber",
-        "Age": 10,
-        "Weight": 35,
-        "Height": 155,
-        "Sex": "M"
-      },
-      {
-        "Interests": [
-          {
-            "Type": "Board Games",
-            "Description": "Boardgaming like a family"
-          },
-          {
-            "Type": "Ultimate",
-            "Description": "Chasing flying saucers"
-          }
-        ],
-        "Pets": [],
-        "Id": 2,
-        "FirstName": "Leopold",
-        "LastName": "Humphrey",
-        "HairColor": "Black",
-        "EyeColor": "Blue",
-        "Age": 6,
-        "Weight": 85.1,
-        "Height": 130,
-        "Sex": "M"
-      },
       {
         "Interests": [
           {

@@ -35,7 +35,7 @@ namespace RestServer.Controllers
 
         [HttpGet]
         [Route("adult/{id:int}")]
-        public async Task<ActionResult<Family>> GetFamilyWithAdult([FromRoute] int id)
+        public async Task<ActionResult<Family>> GetFamilyWithAdultAsync([FromRoute] int id)
         {
             try
             {
@@ -45,13 +45,13 @@ namespace RestServer.Controllers
             catch (Exception e)
             {
                 Console.WriteLine(e);
-                throw;
+                return StatusCode(500, e.Message);
             }
         }
         
         [HttpGet]
         [Route("child/{id:int}")]
-        public async Task<ActionResult<Family>> GetFamilyWithChild([FromRoute] int id)
+        public async Task<ActionResult<Family>> GetFamilyWithChildAsync([FromRoute] int id)
         {
             try
             {
@@ -61,7 +61,7 @@ namespace RestServer.Controllers
             catch (Exception e)
             {
                 Console.WriteLine(e);
-                throw;
+                return StatusCode(500, e.Message);
             }
         }
     }
