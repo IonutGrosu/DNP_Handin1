@@ -31,7 +31,7 @@ namespace DNP_Handin1
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddScoped<IDataAdapter, RestAdapter>(); // handling data (reading json or rest things)
-            services.AddScoped<IUserService, InMemoryUserService>(); // handling user accounts for authentication
+            services.AddScoped<IUserService, RestUserService>(); // handling user accounts for authentication
             services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>(); // handling authentication
 
             services.AddAuthorization(options =>

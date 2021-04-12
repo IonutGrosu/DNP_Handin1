@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Models;
 
 namespace DNP_Handin1.Data
@@ -28,7 +29,7 @@ namespace DNP_Handin1.Data
             }.ToList();
         }
         
-        public User ValidateUser(string UserName, string Password)
+        public async Task<User> ValidateUserAsync(string UserName, string Password)
         {
             User temp = users.FirstOrDefault(user => user.UserName.Equals(UserName));
             if (temp == null)

@@ -33,6 +33,7 @@ namespace RestServer
                 c.SwaggerDoc("v1", new OpenApiInfo {Title = "RestServer", Version = "v1"});
             });
             services.AddScoped<IFileAdapter, FileAdapter>();
+            services.AddScoped<IUserService, InMemoryUserService>(); // handling user accounts for authentication
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -44,7 +44,7 @@ namespace DNP_Handin1.Authentication
             return await Task.FromResult(new AuthenticationState(cachedClaimsPrincipal));
         }
 
-        public void ValidateLogin(string UserName, string Password)
+        public async Task ValidateLogin(string UserName, string Password)
         {
             Console.WriteLine("Validate log in");
             if (string.IsNullOrEmpty(UserName))
@@ -60,7 +60,7 @@ namespace DNP_Handin1.Authentication
             ClaimsIdentity identity = new ClaimsIdentity();
             try
             {
-                User user = UserService.ValidateUser(UserName, Password);
+                User user = await UserService.ValidateUserAsync(UserName, Password);
                 identity = SetupClaimsForUser(user);
                 string serialisedData = JsonSerializer.Serialize(user);
                 JsRuntime.InvokeVoidAsync("sessionStorage.setItem", "currentUser", serialisedData);
