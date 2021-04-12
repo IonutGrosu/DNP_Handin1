@@ -23,7 +23,7 @@ namespace RestServer.Controllers
         {
             try
             {
-                IList<Family> families = fileAdapter.GetAllFamilies();
+                IList<Family> families = await fileAdapter.GetAllFamiliesAsync();
                 return Ok(families);
             }
             catch (Exception e)
@@ -39,7 +39,7 @@ namespace RestServer.Controllers
         {
             try
             {
-                Family family = fileAdapter.GetFamilyWithAdult(id);
+                Family family = await fileAdapter.GetFamilyWithAdultAsync(id);
                 return Ok(family);
             }
             catch (Exception e)
@@ -55,7 +55,7 @@ namespace RestServer.Controllers
         {
             try
             {
-                Family family = fileAdapter.GetFamilyWithChild(id);
+                Family family = await fileAdapter.GetFamilyWithChildAsync(id);
                 return Ok(family);
             }
             catch (Exception e)

@@ -194,12 +194,12 @@ else
             ).ToList();
     }
     
-    void OnClose(string value)
+    private async void OnClose(string value)
     {
         SelectedButton = value;
         if (SelectedButton.Equals("confirm") && idToDelete >= 0)
         {
-            RemoveChildAsync(idToDelete);
+            await RemoveChildAsync(idToDelete);
             idToDelete = -1;
         }
     }
@@ -207,7 +207,7 @@ else
     private async Task RemoveChildAsync(int id)
     {
         Console.WriteLine($"Removing child {id}");
-        FileAdapter.RemoveChildAsync(id);
+        await FileAdapter.RemoveChildAsync(id);
         
         //reload list
         allChildren = await FileAdapter.GetAllChildrenAsync();

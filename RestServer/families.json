@@ -32,7 +32,7 @@
           "Salary": 66408
         },
         "Id": 1,
-        "FirstName": "Lyla",
+        "FirstName": "Liluta",
         "LastName": "Humphrey",
         "HairColor": "Black",
         "EyeColor": "Brown",
@@ -57,42 +57,7 @@
         "Sex": "F"
       }
     ],
-    "Children": [
-      {
-        "Interests": [
-          {
-            "Type": "Drawing",
-            "Description": "Or doodling"
-          },
-          {
-            "Type": "Reading",
-            "Description": "Expand your horizon "
-          },
-          {
-            "Type": "Paper Plane Flying",
-            "Description": "Just crumble a paper into a ball and throw it"
-          },
-          {
-            "Type": "Harry Potter",
-            "Description": "Slightly more narrow than book reading"
-          },
-          {
-            "Type": "Gaming",
-            "Description": "#PCMASTERRACE"
-          }
-        ],
-        "Pets": [],
-        "Id": 3,
-        "FirstName": "Chiara",
-        "LastName": "Humphrey",
-        "HairColor": "Black",
-        "EyeColor": "Brown",
-        "Age": 15,
-        "Weight": 64.4,
-        "Height": 183,
-        "Sex": "F"
-      }
-    ],
+    "Children": [],
     "Pets": []
   },
   {
@@ -131,28 +96,6 @@
       }
     ],
     "Children": [
-      {
-        "Interests": [
-          {
-            "Type": "Ninja Turtles",
-            "Description": "Young, genetically modified, secret assassin tortoise"
-          },
-          {
-            "Type": "Hockey",
-            "Description": "Not the one on ice"
-          }
-        ],
-        "Pets": [],
-        "Id": 4,
-        "FirstName": "Meredith",
-        "LastName": "Mcclure",
-        "HairColor": "Black",
-        "EyeColor": "Grey",
-        "Age": 24,
-        "Weight": 45.73,
-        "Height": 147,
-        "Sex": "F"
-      },
       {
         "Interests": [
           {

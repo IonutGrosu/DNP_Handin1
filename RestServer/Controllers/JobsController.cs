@@ -23,7 +23,7 @@ namespace RestServer.Controllers
         {
             try
             {
-                IList<Job> jobs = fileAdapter.GetAllJobs();
+                IList<Job> jobs = await fileAdapter.GetAllJobsAsync();
                 Console.WriteLine(jobs.Count);
                 return Ok(jobs);
             }

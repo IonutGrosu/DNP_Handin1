@@ -23,7 +23,7 @@ namespace RestServer.Controllers
         {
             try
             {
-                IList<Child> children = fileAdapter.GetAllChildren();
+                IList<Child> children = await fileAdapter.GetAllChildrenAsync();
                 Console.WriteLine(children.Count);
                 return Ok(children);
             }
@@ -40,7 +40,7 @@ namespace RestServer.Controllers
         {
             try
             {
-                Child child = fileAdapter.GetChildById(id);
+                Child child = await fileAdapter.GetChildByIdAsync(id);
                 return Ok(child);
             }
             catch (Exception e)
@@ -56,7 +56,7 @@ namespace RestServer.Controllers
         {
             try
             {
-                fileAdapter.RemoveChild(id);
+                fileAdapter.RemoveChildAsync(id);
             }
             catch (Exception e)
             {
@@ -69,7 +69,7 @@ namespace RestServer.Controllers
         {
             try
             {
-                fileAdapter.EditChild(child);
+                fileAdapter.EditChildAsync(child);
             }
             catch (Exception e)
             {

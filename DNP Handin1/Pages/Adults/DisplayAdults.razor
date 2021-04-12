@@ -217,7 +217,7 @@ else
     private async void RemoveAdultAsync(int id)
     {
         Console.WriteLine($"Removing adult {id}");
-        FileAdapter.RemoveAdultAsync(id);
+        await FileAdapter.RemoveAdultAsync(id);
         
         //reload list
         allAdults = await FileAdapter.GetAllAdultsAsync();

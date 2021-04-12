@@ -1,23 +1,24 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Models;
 
 namespace DNP_Handin1.Data
 {
     public interface IFileAdapter
     {
-        public List<Family> GetAllFamilies();
-        public Family GetFamilyWithAdult(int adultId);
-        public Family GetFamilyWithChild(int childId);
-        public List<Adult> GetAllAdults();
-        public Adult GetAdultById(int id);
-        public void AddAdult(Adult adult);
-        public void RemoveAdult(int id);
-        public void EditAdult(Adult editedAdult);
-        public List<Child> GetAllChildren();
-        public Child GetChildById(int id);
-        public void RemoveChild(int id);
-        public void EditChild(Child editedChild);
-        public List<Job> GetAllJobs();
+        public Task<List<Family>> GetAllFamiliesAsync();
+        public Task<Family> GetFamilyWithAdultAsync(int adultId);
+        public Task<Family> GetFamilyWithChildAsync(int childId);
+        public Task<List<Adult>> GetAllAdultsAsync();
+        public Task<Adult> GetAdultByIdAsync(int id);
+        public Task AddAdultAsync(Adult adult);
+        public Task RemoveAdultAsync(int id);
+        public Task EditAdultAsync(Adult editedAdult);
+        public Task<List<Child>> GetAllChildrenAsync();
+        public Task<Child> GetChildByIdAsync(int id);
+        public Task RemoveChildAsync(int id);
+        public Task EditChildAsync(Child editedChild);
+        public Task<List<Job>> GetAllJobsAsync();
     }
 }

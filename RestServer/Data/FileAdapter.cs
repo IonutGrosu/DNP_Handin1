@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
+using System.Threading.Tasks;
 using FileData;
 using Models;
 
@@ -12,14 +13,14 @@ namespace DNP_Handin1.Data
         private FileContext FileContext = new FileContext();
         private int AdultID = 15;
 
-        public List<Family> GetAllFamilies()
+        public async Task<List<Family>> GetAllFamiliesAsync()
         {
             return (List<Family>) FileContext.Families;
         }
 
-        public Family GetFamilyWithAdult(int adultId)
+        public async Task<Family> GetFamilyWithAdultAsync(int adultId)
         {
-            foreach (Family family in GetAllFamilies())
+            foreach (Family family in GetAllFamiliesAsync().Result)
             {
                 foreach (Adult familyAdult in family.Adults)
                 {
@@ -33,9 +34,9 @@ namespace DNP_Handin1.Data
             return null;
         }
 
-        public Family GetFamilyWithChild(int childId)
+        public async Task<Family> GetFamilyWithChildAsync(int childId)
         {
-            foreach (Family family in GetAllFamilies())
+            foreach (Family family in GetAllFamiliesAsync().Result)
             {
                 foreach (Child familyChild in family.Children)
                 {
@@ -49,7 +50,7 @@ namespace DNP_Handin1.Data
             return null;
         }
 
-        public List<Adult> GetAllAdults()
+        public async Task<List<Adult>> GetAllAdultsAsync()
         {
             foreach (Adult fileContextAdult in FileContext.Adults)
             {
@@ -61,12 +62,12 @@ namespace DNP_Handin1.Data
             return (List<Adult>) FileContext.Adults;
         }
 
-        public Adult GetAdultById(int id)
+        public async Task<Adult> GetAdultByIdAsync(int id)
         {
             return FileContext.Adults.FirstOrDefault(adult => adult.Id == id);
         }
 
-        public void AddAdult(Adult adult)
+        public async Task AddAdultAsync(Adult adult)
         {
             adult.Id = AdultID++;
             // FileContext.Adults.Add(adult);
@@ -78,13 +79,13 @@ namespace DNP_Handin1.Data
             }));
         }
 
-        public void RemoveAdult(int id)
+        public async Task RemoveAdultAsync(int id)
         {
             FileContext.Adults.Remove(FileContext.Adults.First(t => t.Id==id));
             FileContext.SaveChanges();
         }
 
-        public void EditAdult(Adult editedAdult)
+        public async Task EditAdultAsync(Adult editedAdult)
         {
             foreach (Adult fileContextAdult in FileContext.Adults)
             {
@@ -124,10 +125,10 @@ namespace DNP_Handin1.Data
             FileContext.SaveChanges();
         }
 
-        public List<Child> GetAllChildren()
+        public async Task<List<Child>> GetAllChildrenAsync()
         {
             List<Child> allChildren = new List<Child>();
-            foreach (Family family in GetAllFamilies())
+            foreach (Family family in GetAllFamiliesAsync().Result)
             {
                 foreach (Child familyChild in family.Children)
                 {
@@ -137,12 +138,12 @@ namespace DNP_Handin1.Data
             return allChildren;
         }
 
-        public Child GetChildById(int id)
+        public async Task<Child> GetChildByIdAsync(int id)
         {
-            return GetAllChildren().FirstOrDefault(child => child.Id == id);
+            return GetAllChildrenAsync().Result.FirstOrDefault(child => child.Id == id);
         }
 
-        public void RemoveChild(int id)
+        public async Task RemoveChildAsync(int id)
         {
             foreach (Family fileContextFamily in FileContext.Families)
             {
@@ -151,7 +152,7 @@ namespace DNP_Handin1.Data
             FileContext.SaveChanges();
         }
 
-        public void EditChild(Child editedChild)
+        public async Task EditChildAsync(Child editedChild)
         {
             foreach (Family fileContextFamily in FileContext.Families)
             {
@@ -174,10 +175,10 @@ namespace DNP_Handin1.Data
             FileContext.SaveChanges();
         }
 
-        public List<Job> GetAllJobs()
+        public async Task<List<Job>> GetAllJobsAsync()
         {
             List<Job> jobs = new List<Job>();
-            List<Adult> adults = GetAllAdults();
+            List<Adult> adults = GetAllAdultsAsync().Result;
             foreach (Adult adult in adults)
             {
                 jobs.Add(adult.JobTitle);

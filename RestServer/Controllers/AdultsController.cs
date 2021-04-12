@@ -23,7 +23,7 @@ namespace RestServer.Controllers
         {
             try
             {
-                IList<Adult> adults = fileAdapter.GetAllAdults();
+                IList<Adult> adults = await fileAdapter.GetAllAdultsAsync();
                 return Ok(adults);
             }
             catch (Exception e)
@@ -39,7 +39,7 @@ namespace RestServer.Controllers
         {
             try
             {
-                Adult adult = fileAdapter.GetAdultById(id);
+                Adult adult = await fileAdapter.GetAdultByIdAsync(id);
                 return Ok(adult);
             }
             catch (Exception e)
@@ -54,7 +54,7 @@ namespace RestServer.Controllers
         {
             try
             {
-                fileAdapter.AddAdult(adultToAdd);
+                fileAdapter.AddAdultAsync(adultToAdd);
             }
             catch (Exception e)
             {
@@ -68,7 +68,7 @@ namespace RestServer.Controllers
         {
             try
             {
-                fileAdapter.RemoveAdult(id);
+                fileAdapter.RemoveAdultAsync(id);
             }
             catch (Exception e)
             {
@@ -81,7 +81,7 @@ namespace RestServer.Controllers
         {
             try
             {
-                fileAdapter.EditAdult(adult);
+                fileAdapter.EditAdultAsync(adult);
             }
             catch (Exception e)
             {
