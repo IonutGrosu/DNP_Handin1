@@ -1,28 +1,42 @@
 ﻿@using Models
 
 <h3>Pets</h3>
-
-<table class="table">
-    <thead>
-    <tr>
-        <th>Name</th>
-        <th>Species</th>
-    </tr>
-    </thead>
-    <tbody>
-    @foreach (Pet pet in PetsToDisplay)
-    {
+@if (PetsToDisplay == null)
+{
+    <p>
+        <em>Loading..</em>
+    </p>
+}else if (!PetsToDisplay.Any())
+{
+    <p>
+        <em>No data stored. Please add some</em>
+    </p>
+}
+else
+{
+    <table class="table">
+        <thead>
         <tr>
-            <td>
-                @pet.Name
-            </td>
-            <td>
-               @pet.Species
-            </td>
+            <th>Name</th>
+            <th>Species</th>
         </tr>
-    }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+        @foreach (Pet pet in PetsToDisplay)
+        {
+            <tr>
+                <td>
+                    @pet.Name
+                </td>
+                <td>
+                   @pet.Species
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+
 
 @code {
     [Parameter]

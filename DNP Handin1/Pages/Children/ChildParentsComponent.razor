@@ -4,25 +4,39 @@
 
 <h3>Parents</h3>
 
-<table class="table">
-    <thead>
-    <tr>
-        <th>Id</th>
-        <th>Name</th>
-    </tr>
-    </thead>
-    <tbody>
-    @foreach (Adult parent in Parents)
-    {
+@if (Parents == null)
+{
+    <p>
+        <em>Loading..</em>
+    </p>
+}else if (!Parents.Any())
+{
+    <p>
+        <em>No data stored. Please add some</em>
+    </p>
+}
+else
+{
+    <table class="table">
+        <thead>
         <tr>
-            <td>@parent.Id</td>
-            <td>
-                @parent.FirstName @parent.LastName
-            </td>
+            <th>Id</th>
+            <th>Name</th>
         </tr>
-    }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+        @foreach (Adult parent in Parents)
+        {
+            <tr>
+                <td>@parent.Id</td>
+                <td>
+                    @parent.FirstName @parent.LastName
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
 
 @code {
     [Parameter]

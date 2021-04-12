@@ -1,28 +1,42 @@
 ﻿@using Models
 
 <h3>Interests</h3>
-
-<table class="table">
-    <thead>
-    <tr>
-        <th>Name</th>
-        <th>Description</th>
-    </tr>
-    </thead>
-    <tbody>
-    @foreach (Interest interest in InterestsToDisplay)
-    {
+@if (InterestsToDisplay == null)
+{
+    <p>
+        <em>Loading..</em>
+    </p>
+}else if (!InterestsToDisplay.Any())
+{
+    <p>
+        <em>No data stored. Please add some</em>
+    </p>
+}
+else
+{
+    <table class="table">
+        <thead>
         <tr>
-            <td>
-                @interest.Type
-            </td>
-            <td>
-                @interest.Description
-            </td>
+            <th>Name</th>
+            <th>Description</th>
         </tr>
-    }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+        @foreach (Interest interest in InterestsToDisplay)
+        {
+            <tr>
+                <td>
+                    @interest.Type
+                </td>
+                <td>
+                    @interest.Description
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+
 
 @code {
     [Parameter]

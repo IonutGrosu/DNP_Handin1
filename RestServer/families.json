@@ -88,7 +88,7 @@
         "HairColor": "Black",
         "EyeColor": "Brown",
         "Age": 15,
-        "Weight": 84.405,
+        "Weight": 64.4,
         "Height": 183,
         "Sex": "F"
       }
@@ -116,8 +116,8 @@
       },
       {
         "JobTitle": {
-          "JobTitle": "Vice Principal",
-          "Salary": 72901
+          "JobTitle": "Call Center Agent",
+          "Salary": 20308
         },
         "Id": 4,
         "FirstName": "Ophelia",

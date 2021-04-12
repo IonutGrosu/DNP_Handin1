@@ -3,26 +3,39 @@
 @inject IDataAdapter FileAdapter
 
 <h3>Brothers</h3>
-
-<table class="table">
-    <thead>
-    <tr>
-        <th>Id</th>
-        <th>Brothers</th>
-    </tr>
-    </thead>
-    <tbody>
-    @foreach (Child brother in Brothers)
-    {
+@if (Brothers == null)
+{
+    <p>
+        <em>Loading..</em>
+    </p>
+}else if (!Brothers.Any())
+{
+    <p>
+        <em>No data stored. Please add some</em>
+    </p>
+}
+else
+{
+    <table class="table">
+        <thead>
         <tr>
-            <td>@brother.Id</td>
-            <td>
-                @brother.FirstName @brother.LastName
-            </td>
+            <th>Id</th>
+            <th>Brothers</th>
         </tr>
-    }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+        @foreach (Child brother in Brothers)
+        {
+            <tr>
+                <td>@brother.Id</td>
+                <td>
+                    @brother.FirstName @brother.LastName
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
 
 @code {
     [Parameter]

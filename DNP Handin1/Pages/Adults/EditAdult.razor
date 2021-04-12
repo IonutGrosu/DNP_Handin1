@@ -16,6 +16,14 @@
         </form>
 </Modal>
 
+@if (adultToEdit == null)
+{
+    <p>
+        <em>Loading..</em>
+    </p>
+}else
+{
+    
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-10">
@@ -30,7 +38,7 @@
     </div>
 </div>
 
-<EditForm Model="@adultToEdit" OnValidSubmit="@SaveEditedAdult">
+<EditForm Model="@adultToEdit" OnValidSubmit="@SaveEditedAdultAsync">
     <DataAnnotationsValidator/>
     <ValidationSummary/>
     <div class="form-group">
@@ -83,6 +91,8 @@
     
 </EditForm>
 <button class="btn btn-outline-success" @onclick="e =>IsModalOpened=true">Edit adult</button>
+}
+
 
 @code {
 
@@ -108,14 +118,14 @@
     {
         if (value.Equals("confirm"))
         {
-            SaveEditedAdult();
+            SaveEditedAdultAsync();
         }
     }
 
-    private void SaveEditedAdult()
+    private async void SaveEditedAdultAsync()
     {
         AssignSelectedJob();
-        FileAdapter.EditAdultAsync(adultToEdit);
+        await FileAdapter.EditAdultAsync(adultToEdit);
         NavigationManager.NavigateTo("/adults");
     }
 
