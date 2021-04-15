@@ -1,6 +1,7 @@
 ﻿@page "/adults"
 @using Models
 @using DNP_Handin1.Data
+@using Microsoft.AspNetCore.Components.Authorization
 @inject IDataAdapter FileAdapter
 @inject NavigationManager NavigationManager
 
@@ -139,7 +140,7 @@ else
         ExecuteFilter();
     }
 
-    private async void OpenDetailedAdultPageAsync(int id)
+    private async Task OpenDetailedAdultPageAsync(int id)
     {
         var user = (await AuthState).User;
         if (user.Identity.IsAuthenticated)
@@ -204,7 +205,7 @@ else
             ).ToList();
     }
 
-    void OnClose(string value)
+    private void OnClose(string value)
     {
         SelectedButton = value;
         if (SelectedButton.Equals("confirm") && idToDelete >= 0)
@@ -214,7 +215,7 @@ else
         }
     }
 
-    private async void RemoveAdultAsync(int id)
+    private async Task RemoveAdultAsync(int id)
     {
         Console.WriteLine($"Removing adult {id}");
         await FileAdapter.RemoveAdultAsync(id);

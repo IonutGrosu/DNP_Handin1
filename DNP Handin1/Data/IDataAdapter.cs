@@ -8,7 +8,6 @@ namespace DNP_Handin1.Data
     public interface IDataAdapter
     {
         public Task<List<Family>> GetAllFamiliesAsync();
-
         public Task<Family> GetFamilyWithAdultAsync(int adultId);
         public Task<Family> GetFamilyWithChildAsync(int childId);
         public Task<List<Adult>> GetAllAdultsAsync();
