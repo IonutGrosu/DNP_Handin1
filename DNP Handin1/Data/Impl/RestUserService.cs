@@ -11,7 +11,6 @@ namespace DNP_Handin1.Data
         public async Task<User> ValidateUserAsync(string UserName, string Password)
         {
             HttpClient client = new HttpClient();
-            
             HttpResponseMessage responseMessage = await client.GetAsync($"https://localhost:5001/login?username={UserName}&password={Password}");
             
             if (!responseMessage.IsSuccessStatusCode)
