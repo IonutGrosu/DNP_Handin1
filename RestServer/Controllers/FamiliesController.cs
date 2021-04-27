@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using DNP_Handin1.Data;
+using FileData;
 using Microsoft.AspNetCore.Mvc;
 using Models;
 
@@ -21,16 +22,26 @@ namespace RestServer.Controllers
         [HttpGet]
         public async Task<ActionResult<IList<Family>>> GetFamiliesAsync()
         {
-            try
+            List<Family> familiesFromJson = await fileAdapter.GetAllFamiliesAsync();
+            foreach (Family family in familiesFromJson)
             {
-                IList<Family> families = await fileAdapter.GetAllFamiliesAsync();
-                return Ok(families);
+                using (CloudDbContext ctx = new CloudDbContext())
+                {
+                    ctx.Families.Add(family);
+                    ctx.SaveChanges();
+                }
             }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                return StatusCode(500, e.Message);
-            }
+            // try
+            // {
+            //     IList<Family> families = await fileAdapter.GetAllFamiliesAsync();
+            //     return Ok(families);
+            // }
+            // catch (Exception e)
+            // {
+            //     Console.WriteLine(e);
+            //     return StatusCode(500, e.Message);
+            // }
+            return Ok();
         }
 
         [HttpGet]
