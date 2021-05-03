@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using DNP_Handin1.Data;
+using FileData.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Models;
 
@@ -11,11 +12,11 @@ namespace RestServer.Controllers
     [Route("[controller]")]
     public class JobsController : ControllerBase
     {
-        private IFileAdapter fileAdapter;
+        private IJobsRepo JobsRepo;
 
-        public JobsController(IFileAdapter fileAdapter)
+        public JobsController(IJobsRepo jobsRepo)
         {
-            this.fileAdapter = fileAdapter;
+            this.JobsRepo = jobsRepo;
         }
 
         [HttpGet]
@@ -23,8 +24,7 @@ namespace RestServer.Controllers
         {
             try
             {
-                IList<Job> jobs = await fileAdapter.GetAllJobsAsync();
-                Console.WriteLine(jobs.Count);
+                IList<Job> jobs = await JobsRepo.GetAllJobsAsync();
                 return Ok(jobs);
             }
             catch (Exception e)

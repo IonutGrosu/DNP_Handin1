@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DNP_Handin1.Data;
+using FileData.Repositories;
+using FileData.Repositories.Impl;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -33,6 +35,7 @@ namespace RestServer
                 c.SwaggerDoc("v1", new OpenApiInfo {Title = "RestServer", Version = "v1"});
             });
             services.AddScoped<IFileAdapter, FileAdapter>();
+            services.AddScoped<IJobsRepo, JobsRepo>();
             services.AddScoped<IUserService, InMemoryUserService>(); // handling user accounts for authentication
         }
 
