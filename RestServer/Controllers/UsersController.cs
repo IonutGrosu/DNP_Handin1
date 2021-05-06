@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using DNP_Handin1.Data;
+using FileData.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Models;
 
@@ -10,11 +11,11 @@ namespace RestServer.Controllers
     [Route("login")]
     public class UsersController : ControllerBase
     {
-        private IUserService userService;
+        private IUsersRepository usersRepository;
 
-        public UsersController(IUserService userService)
+        public UsersController(IUsersRepository usersRepository)
         {
-            this.userService = userService;
+            this.usersRepository = usersRepository;
         }
 
         [HttpGet]
@@ -22,7 +23,7 @@ namespace RestServer.Controllers
         {
             try
             {
-                User user = await userService.ValidateUserAsync(username, password);
+                User user = await usersRepository.ValidateUserAsync(username, password);
                 return Ok(user);
             }
             catch (Exception e)

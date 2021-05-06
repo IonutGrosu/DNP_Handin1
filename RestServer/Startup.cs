@@ -38,7 +38,7 @@ namespace RestServer
             services.AddScoped<IFamiliesRepo, FamiliesRepo>();
             services.AddScoped<IChildrenRepo, ChildrenRepo>();
             services.AddScoped<IAdultsRepo, AdultsRepo>();
-            services.AddScoped<IUserService, InMemoryUserService>(); // handling user accounts for authentication
+            services.AddScoped<IUsersRepository, UsersRepository>(); // handling user accounts for authentication
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
