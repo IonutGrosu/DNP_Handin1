@@ -11,6 +11,7 @@ namespace FileData
         public DbSet<Interest> Interests { get; set; }
         public DbSet<Pet> Pets { get; set; }
         public DbSet<Family> Families { get; set; }
+        public DbSet<User> Users { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
