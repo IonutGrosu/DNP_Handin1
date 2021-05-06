@@ -1,18 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using DNP_Handin1.Data;
 using FileData.Repositories;
 using FileData.Repositories.Impl;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 
 namespace RestServer
@@ -38,7 +30,7 @@ namespace RestServer
             services.AddScoped<IFamiliesRepo, FamiliesRepo>();
             services.AddScoped<IChildrenRepo, ChildrenRepo>();
             services.AddScoped<IAdultsRepo, AdultsRepo>();
-            services.AddScoped<IUsersRepository, UsersRepository>(); // handling user accounts for authentication
+            services.AddScoped<IUsersRepo, UsersRepo>(); // handling user accounts for authentication
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

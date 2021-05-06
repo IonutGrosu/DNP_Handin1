@@ -1,9 +1,9 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 using Models;
 
-namespace DNP_Handin1.Data
+namespace FileData.Repositories
 {
-    public interface IUserService
+    public interface IUsersRepo
     {
         Task<User> ValidateUserAsync(string UserName, string Password);
     }

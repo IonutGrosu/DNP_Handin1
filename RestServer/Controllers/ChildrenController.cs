@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using DNP_Handin1.Data;
 using FileData.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Models;
@@ -69,7 +68,7 @@ namespace RestServer.Controllers
         {
             try
             {
-                childrenRepo.EditChildAsync(child);
+                await childrenRepo.EditChildAsync(child);
             }
             catch (Exception e)
             {

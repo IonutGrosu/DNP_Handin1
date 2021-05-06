@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using DNP_Handin1.Data;
 using FileData.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Models;
@@ -11,9 +10,9 @@ namespace RestServer.Controllers
     [Route("login")]
     public class UsersController : ControllerBase
     {
-        private IUsersRepository usersRepository;
+        private IUsersRepo usersRepository;
 
-        public UsersController(IUsersRepository usersRepository)
+        public UsersController(IUsersRepo usersRepository)
         {
             this.usersRepository = usersRepository;
         }

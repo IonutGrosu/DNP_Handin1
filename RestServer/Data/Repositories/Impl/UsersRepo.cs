@@ -5,7 +5,7 @@ using Models;
 
 namespace FileData.Repositories.Impl
 {
-    public class UsersRepository : IUsersRepository
+    public class UsersRepo : IUsersRepo
     {
         public async Task<User> ValidateUserAsync(string UserName, string Password)
         {
