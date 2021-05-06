@@ -34,7 +34,7 @@ else
         @foreach (var family in Families)
         {
             <tr>
-                <td>-</td>
+                <td>@family.Id</td>
                 <td>@family.StreetName</td>
                 <td>@family.HouseNumber</td>
                 <td>@family.Adults.Count</td>

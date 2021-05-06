@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using DNP_Handin1.Data;
+using FileData.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Models;
 
@@ -11,11 +12,11 @@ namespace RestServer.Controllers
     [Route("[controller]")]
     public class ChildrenController : ControllerBase
     {
-        private IFileAdapter fileAdapter;
+        private IChildrenRepo childrenRepo;
 
-        public ChildrenController(IFileAdapter fileAdapter)
+        public ChildrenController(IChildrenRepo childrenRepo)
         {
-            this.fileAdapter = fileAdapter;
+            this.childrenRepo = childrenRepo;
         }
 
         [HttpGet]
@@ -23,8 +24,7 @@ namespace RestServer.Controllers
         {
             try
             {
-                IList<Child> children = await fileAdapter.GetAllChildrenAsync();
-                Console.WriteLine(children.Count);
+                IList<Child> children = await childrenRepo.GetAllChildrenAsync();
                 return Ok(children);
             }
             catch (Exception e)
@@ -40,7 +40,7 @@ namespace RestServer.Controllers
         {
             try
             {
-                Child child = await fileAdapter.GetChildByIdAsync(id);
+                Child child = await childrenRepo.GetChildByIdAsync(id);
                 return Ok(child);
             }
             catch (Exception e)
@@ -56,7 +56,7 @@ namespace RestServer.Controllers
         {
             try
             {
-                fileAdapter.RemoveChildAsync(id);
+                childrenRepo.RemoveChildAsync(id);
             }
             catch (Exception e)
             {
@@ -69,7 +69,7 @@ namespace RestServer.Controllers
         {
             try
             {
-                fileAdapter.EditChildAsync(child);
+                childrenRepo.EditChildAsync(child);
             }
             catch (Exception e)
             {

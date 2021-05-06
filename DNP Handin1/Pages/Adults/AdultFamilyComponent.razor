@@ -102,10 +102,10 @@ else
             Children = FamilyToShow.Children;
             Pets = FamilyToShow.Pets;
         }
-        GetSpouse();
+        await GetSpouse();
     }
 
-    private void GetSpouse()
+    private async Task GetSpouse()
     {
         Spouse = null;
         foreach (Adult adult in FamilyToShow.Adults)

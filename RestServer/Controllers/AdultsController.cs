@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using DNP_Handin1.Data;
+using FileData.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Models;
 
@@ -11,11 +12,11 @@ namespace RestServer.Controllers
     [Route("[controller]")]
     public class AdultsController : ControllerBase
     {
-        private IFileAdapter fileAdapter;
+        private IAdultsRepo adultsRepo;
 
-        public AdultsController(IFileAdapter fileAdapter)
+        public AdultsController(IAdultsRepo adultsRepo)
         {
-            this.fileAdapter = fileAdapter;
+            this.adultsRepo = adultsRepo;
         }
 
         [HttpGet]
@@ -23,7 +24,7 @@ namespace RestServer.Controllers
         {
             try
             {
-                IList<Adult> adults = await fileAdapter.GetAllAdultsAsync();
+                IList<Adult> adults = await adultsRepo.GetAllAdultsAsync();
                 return Ok(adults);
             }
             catch (Exception e)
@@ -39,7 +40,7 @@ namespace RestServer.Controllers
         {
             try
             {
-                Adult adult = await fileAdapter.GetAdultByIdAsync(id);
+                Adult adult = await adultsRepo.GetAdultByIdAsync(id);
                 return Ok(adult);
             }
             catch (Exception e)
@@ -54,7 +55,7 @@ namespace RestServer.Controllers
         {
             try
             {
-                fileAdapter.AddAdultAsync(adultToAdd);
+                await adultsRepo.AddAdultAsync(adultToAdd);
             }
             catch (Exception e)
             {
@@ -68,7 +69,7 @@ namespace RestServer.Controllers
         {
             try
             {
-                fileAdapter.RemoveAdultAsync(id);
+                await adultsRepo.RemoveAdultAsync(id);
             }
             catch (Exception e)
             {
@@ -81,7 +82,7 @@ namespace RestServer.Controllers
         {
             try
             {
-                fileAdapter.EditAdultAsync(adult);
+                await adultsRepo.EditAdultAsync(adult);
             }
             catch (Exception e)
             {

@@ -205,12 +205,12 @@ else
             ).ToList();
     }
 
-    private void OnClose(string value)
+    private async void OnClose(string value)
     {
         SelectedButton = value;
         if (SelectedButton.Equals("confirm") && idToDelete >= 0)
         {
-            RemoveAdultAsync(idToDelete);
+            await RemoveAdultAsync(idToDelete);
             idToDelete = -1;
         }
     }

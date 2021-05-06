@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using DNP_Handin1.Data;
 using FileData;
+using FileData.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Models;
 
@@ -12,36 +13,26 @@ namespace RestServer.Controllers
     [Route("[controller]")]
     public class FamiliesController : ControllerBase
     {
-        private IFileAdapter fileAdapter;
+        private IFamiliesRepo familiesRepo;
 
-        public FamiliesController(IFileAdapter fileAdapter)
+        public FamiliesController(IFamiliesRepo familiesRepo)
         {
-            this.fileAdapter = fileAdapter;
+            this.familiesRepo = familiesRepo;
         }
 
         [HttpGet]
         public async Task<ActionResult<IList<Family>>> GetFamiliesAsync()
         {
-            List<Family> familiesFromJson = await fileAdapter.GetAllFamiliesAsync();
-            foreach (Family family in familiesFromJson)
+            try
             {
-                using (CloudDbContext ctx = new CloudDbContext())
-                {
-                    ctx.Families.Add(family);
-                    ctx.SaveChanges();
-                }
+                IList<Family> families = await familiesRepo.GetAllFamiliesAsync();
+                return Ok(families);
             }
-            // try
-            // {
-            //     IList<Family> families = await fileAdapter.GetAllFamiliesAsync();
-            //     return Ok(families);
-            // }
-            // catch (Exception e)
-            // {
-            //     Console.WriteLine(e);
-            //     return StatusCode(500, e.Message);
-            // }
-            return Ok();
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return StatusCode(500, e.Message);
+            }
         }
 
         [HttpGet]
@@ -50,7 +41,7 @@ namespace RestServer.Controllers
         {
             try
             {
-                Family family = await fileAdapter.GetFamilyWithAdultAsync(id);
+                Family family = await familiesRepo.GetFamilyWithAdultAsync(id);
                 return Ok(family);
             }
             catch (Exception e)
@@ -66,7 +57,7 @@ namespace RestServer.Controllers
         {
             try
             {
-                Family family = await fileAdapter.GetFamilyWithChildAsync(id);
+                Family family = await familiesRepo.GetFamilyWithChildAsync(id);
                 return Ok(family);
             }
             catch (Exception e)

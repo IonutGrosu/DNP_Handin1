@@ -34,8 +34,10 @@ namespace RestServer
             {
                 c.SwaggerDoc("v1", new OpenApiInfo {Title = "RestServer", Version = "v1"});
             });
-            services.AddScoped<IFileAdapter, FileAdapter>();
             services.AddScoped<IJobsRepo, JobsRepo>();
+            services.AddScoped<IFamiliesRepo, FamiliesRepo>();
+            services.AddScoped<IChildrenRepo, ChildrenRepo>();
+            services.AddScoped<IAdultsRepo, AdultsRepo>();
             services.AddScoped<IUserService, InMemoryUserService>(); // handling user accounts for authentication
         }
 
